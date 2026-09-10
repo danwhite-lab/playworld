@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#38bdf8"/>
+      <stop offset="100%" stop-color="#0284c7"/>
+    </linearGradient>
+    <linearGradient id="roofGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#fb7185"/>
+    </linearGradient>
+    <linearGradient id="wallGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#f8fafc"/>
+    </linearGradient>
+    <linearGradient id="doorGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <!-- Background rounded squircle -->
+  <rect width="512" height="512" rx="112" fill="url(#bgGrad)"/>
+
+  <!-- Clouds -->
+  <circle cx="90" cy="140" r="40" fill="white" opacity="0.6"/>
+  <circle cx="130" cy="125" r="50" fill="white" opacity="0.6"/>
+  <circle cx="170" cy="140" r="35" fill="white" opacity="0.6"/>
+
+  <circle cx="370" cy="110" r="35" fill="white" opacity="0.6"/>
+  <circle cx="410" cy="95" r="45" fill="white" opacity="0.6"/>
+  <circle cx="445" cy="110" r="30" fill="white" opacity="0.6"/>
+
+  <!-- Dollhouse structure with shadow -->
+  <g filter="url(#shadow)">
+    <!-- House Main Body -->
+    <rect x="116" y="210" width="280" height="210" rx="16" fill="url(#wallGrad)"/>
+
+    <!-- Roof -->
+    <polygon points="256,90 90,225 422,225" fill="url(#roofGrad)"/>
+    <!-- Roof trim -->
+    <polygon points="256,110 115,225 397,225" fill="#fda4af" opacity="0.4"/>
+
+    <!-- Attic round window -->
+    <circle cx="256" cy="175" r="28" fill="#38bdf8" stroke="#ffffff" stroke-width="6"/>
+    <line x1="228" y1="175" x2="284" y2="175" stroke="#ffffff" stroke-width="4"/>
+    <line x1="256" y1="147" x2="256" y2="203" stroke="#ffffff" stroke-width="4"/>
+
+    <!-- Left Room Window -->
+    <rect x="146" y="245" width="56" height="64" rx="10" fill="#bae6fd" stroke="#e2e8f0" stroke-width="4"/>
+    <line x1="146" y1="277" x2="202" y2="277" stroke="#ffffff" stroke-width="3"/>
+    <line x1="174" y1="245" x2="174" y2="309" stroke="#ffffff" stroke-width="3"/>
+
+    <!-- Right Room Window -->
+    <rect x="310" y="245" width="56" height="64" rx="10" fill="#bae6fd" stroke="#e2e8f0" stroke-width="4"/>
+    <line x1="310" y1="277" x2="366" y2="277" stroke="#ffffff" stroke-width="3"/>
+    <line x1="338" y1="245" x2="338" y2="309" stroke="#ffffff" stroke-width="3"/>
+
+    <!-- Front Door -->
+    <path d="M 226,420 L 226,340 A 30,30 0 0 1 286,340 L 286,420 Z" fill="url(#doorGrad)"/>
+    <circle cx="274" cy="375" r="5" fill="#78350f"/>
+
+    <!-- Balcony Railing on 2nd floor -->
+    <rect x="220" y="260" width="72" height="35" rx="6" fill="#fdf2f8" stroke="#f472b6" stroke-width="3"/>
+    <line x1="234" y1="260" x2="234" y2="295" stroke="#f472b6" stroke-width="2"/>
+    <line x1="248" y1="260" x2="248" y2="295" stroke="#f472b6" stroke-width="2"/>
+    <line x1="264" y1="260" x2="264" y2="295" stroke="#f472b6" stroke-width="2"/>
+    <line x1="278" y1="260" x2="278" y2="295" stroke="#f472b6" stroke-width="2"/>
+    <path d="M 256,270 L 253,277 L 246,277 L 251,281 L 249,288 L 256,284 L 263,288 L 261,281 L 266,277 L 259,277 Z" fill="#fbbf24"/>
+  </g>
+
+  <!-- Little flowers at base -->
+  <circle cx="135" cy="415" r="10" fill="#ec4899"/>
+  <circle cx="135" cy="415" r="4" fill="#fef08a"/>
+  <circle cx="377" cy="415" r="10" fill="#a855f7"/>
+  <circle cx="377" cy="415" r="4" fill="#fef08a"/>
+</svg>

@@ -7,6 +7,18 @@
     <meta name="description" content="Interactive digital dollhouse play world with interactive characters, rooms, and items">
     <meta property="og:title" content="Dollhouse Play World">
     <meta property="og:description" content="Interactive digital dollhouse play world with interactive characters, rooms, and items">
+
+    <!-- PWA & Homescreen App Meta Tags -->
+    <link rel="manifest" href="/manifest.json">
+    <link rel="icon" type="image/svg+xml" href="/icon.svg">
+    <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <meta name="theme-color" content="#e0f2fe">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Dollhouse">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
@@ -62,6 +74,32 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        @keyframes rotatePhoneAnim {
+            0%, 25% {
+                transform: rotate(0deg);
+            }
+            50%, 75% {
+                transform: rotate(90deg);
+            }
+            100% {
+                transform: rotate(0deg);
+            }
+        }
+
+        .phone-rotator {
+            animation: rotatePhoneAnim 2.6s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+        }
+
+        #landscape-prompt-overlay {
+            display: none;
+        }
+
+        @media screen and (orientation: portrait) and (max-width: 1024px) {
+            #landscape-prompt-overlay {
+                display: flex !important;
+            }
+        }
     </style>
 </head>
 <body class="relative w-full h-full overflow-hidden bg-sky-100 select-none">
@@ -71,49 +109,78 @@
     <!-- Top Navigation Jump Bar -->
     <div class="fixed top-3 left-3 right-3 sm:left-auto sm:right-4 z-10 flex items-center justify-between sm:justify-end gap-2 pointer-events-none">
         <div class="hud-glass pointer-events-auto flex items-center gap-1.5 p-1.5 rounded-2xl max-w-full overflow-x-auto no-scrollbar shadow-md">
-            <button onclick="window.camera.panToWorld(500, 2700)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-sky-900 bg-sky-100 hover:bg-sky-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🍦</span> <span>Street</span>
+            <button onclick="window.camera.panToWorld(500, 2700)" aria-label="Street" class="w-9 h-9 rounded-xl text-base bg-sky-100 hover:bg-sky-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🍦</span>
             </button>
-            <button onclick="window.camera.panToWorld(1700, 2200)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-pink-900 bg-pink-100 hover:bg-pink-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>👗</span> <span>Boutique</span>
+            <button onclick="window.camera.panToWorld(1700, 2200)" aria-label="Boutique" class="w-9 h-9 rounded-xl text-base bg-pink-100 hover:bg-pink-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>👗</span>
             </button>
-            <button onclick="window.camera.panToWorld(2820, 1500)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-purple-900 bg-purple-100 hover:bg-purple-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🛏️</span> <span>Bedroom</span>
+            <button onclick="window.camera.panToWorld(2820, 1500)" aria-label="Bedroom" class="w-9 h-9 rounded-xl text-base bg-purple-100 hover:bg-purple-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🛏️</span>
             </button>
-            <button onclick="window.camera.panToWorld(2820, 2100)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-amber-900 bg-amber-100 hover:bg-amber-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🛋️</span> <span>Living</span>
+            <button onclick="window.camera.panToWorld(2820, 2100)" aria-label="Living" class="w-9 h-9 rounded-xl text-base bg-amber-100 hover:bg-amber-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🛋️</span>
             </button>
-            <button onclick="window.camera.panToWorld(3550, 2100)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-teal-900 bg-teal-100 hover:bg-teal-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🎵</span> <span>Music</span>
+            <button onclick="window.camera.panToWorld(3550, 2100)" aria-label="Music" class="w-9 h-9 rounded-xl text-base bg-teal-100 hover:bg-teal-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🎵</span>
             </button>
-            <button onclick="window.camera.panToWorld(3450, 2700)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-orange-900 bg-orange-100 hover:bg-orange-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🍽️</span> <span>Dining</span>
+            <button onclick="window.camera.panToWorld(3450, 2700)" aria-label="Dining" class="w-9 h-9 rounded-xl text-base bg-orange-100 hover:bg-orange-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🍽️</span>
             </button>
-            <button onclick="window.camera.panToWorld(4270, 2100)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-yellow-900 bg-yellow-100 hover:bg-yellow-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🍳</span> <span>Kitchen</span>
+            <button onclick="window.camera.panToWorld(4270, 2100)" aria-label="Kitchen" class="w-9 h-9 rounded-xl text-base bg-yellow-100 hover:bg-yellow-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🍳</span>
             </button>
-            <button onclick="window.camera.panToWorld(4270, 1500)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-cyan-900 bg-cyan-100 hover:bg-cyan-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🧸</span> <span>Nursery</span>
+            <button onclick="window.camera.panToWorld(4270, 1500)" aria-label="Nursery" class="w-9 h-9 rounded-xl text-base bg-cyan-100 hover:bg-cyan-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🧸</span>
             </button>
-            <button onclick="window.camera.panToWorld(4270, 900)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-fuchsia-900 bg-fuchsia-100 hover:bg-fuchsia-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🎨</span> <span>Art Loft</span>
+            <button onclick="window.camera.panToWorld(4270, 900)" aria-label="Art Loft" class="w-9 h-9 rounded-xl text-base bg-fuchsia-100 hover:bg-fuchsia-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🎨</span>
             </button>
-            <button onclick="window.camera.panToWorld(2820, 350)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-indigo-900 bg-indigo-100 hover:bg-indigo-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🔭</span> <span>Tower</span>
+            <button onclick="window.camera.panToWorld(2820, 350)" aria-label="Tower" class="w-9 h-9 rounded-xl text-base bg-indigo-100 hover:bg-indigo-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🔭</span>
             </button>
-            <button onclick="window.camera.panToWorld(6200, 2600)" class="px-2.5 py-1.5 rounded-xl text-xs font-bold text-emerald-900 bg-emerald-100 hover:bg-emerald-200 active:scale-95 transition-all flex items-center gap-1 shrink-0">
-                <span>🌱</span> <span>Garden</span>
+            <button onclick="window.camera.panToWorld(6200, 2600)" aria-label="Garden" class="w-9 h-9 rounded-xl text-base bg-emerald-100 hover:bg-emerald-200 active:scale-95 transition-all flex items-center justify-center shrink-0">
+                <span>🌱</span>
             </button>
-        </div>
-
-        <div class="hud-glass hidden xl:flex pointer-events-auto items-center px-3.5 py-2 rounded-2xl text-xs font-mono text-slate-600 font-semibold shadow-sm shrink-0">
-            <span id="camera-debug-info">World: 7200 x 3600</span>
+            <!-- In-App PWA Homescreen Install Button -->
+            <button id="pwa-install-btn" aria-label="Install App" title="Install App" class="hidden w-9 h-9 rounded-xl text-base bg-emerald-200 hover:bg-emerald-300 text-emerald-950 active:scale-95 transition-all items-center justify-center shrink-0 shadow-sm">
+                <span>📲</span>
+            </button>
         </div>
     </div>
 
-    <!-- Interaction Tip Banner -->
-    <div id="interaction-tip" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-10 hud-glass px-5 py-2 rounded-full text-xs text-slate-700 font-bold shadow-lg pointer-events-none transition-opacity duration-500 opacity-90 flex items-center gap-2 border border-white">
-        <span>✨ Drag people and objects into any room! Place characters on chairs, feed them treats, dress them, or water garden plants.</span>
+    <!-- Landscape Mode Orientation Prompt Overlay (Visual Only, No Written Text/Headings) -->
+    <div id="landscape-prompt-overlay" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-sky-950/95 text-white backdrop-blur-md transition-opacity duration-300">
+        <div class="flex flex-col items-center justify-center p-8 text-center max-w-xs">
+            <div class="relative w-32 h-32 flex items-center justify-center mb-6">
+                <div class="phone-rotator w-16 h-28 rounded-2xl border-4 border-sky-300 bg-sky-800/80 shadow-2xl flex items-center justify-center relative">
+                    <div class="w-8 h-1 rounded-full bg-sky-300 absolute top-2"></div>
+                    <div class="w-3 h-3 rounded-full bg-sky-300/80 absolute bottom-2"></div>
+                    <span class="text-3xl">🏰</span>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 px-5 py-2.5 rounded-2xl bg-sky-900/80 border border-sky-400/40 shadow-inner">
+                <span class="text-2xl">🔄</span>
+                <span class="text-2xl">📱</span>
+                <span class="text-xl">➡️</span>
+                <span class="text-2xl rotate-90 inline-block">📱</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- iOS PWA Install Guidance Modal (Visual Only) -->
+    <div id="ios-install-modal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="hud-glass max-w-xs w-full p-6 rounded-3xl flex flex-col items-center text-center gap-4 border border-white">
+            <div class="text-4xl">📲</div>
+            <div class="flex items-center gap-3 text-lg font-bold text-slate-800">
+                <span class="p-2 bg-sky-100 rounded-xl">⎋</span>
+                <span>➡️</span>
+                <span class="p-2 bg-sky-100 rounded-xl">➕</span>
+            </div>
+            <button onclick="document.getElementById('ios-install-modal').classList.add('hidden'); document.getElementById('ios-install-modal').classList.remove('flex');" class="w-full py-2.5 rounded-xl bg-sky-500 text-white font-bold text-sm shadow-md active:scale-95 transition-all">
+                ✓
+            </button>
+        </div>
     </div>
 
     <script>
@@ -259,6 +326,12 @@
                 this.w = config.w || 60; // Base Width
                 this.h = config.h || 60; // Base Height
                 this.draw = config.draw; // Custom Canvas render function
+                this.drawForeground = config.drawForeground || null;
+                this.onClick = config.onClick || null;
+                this.onDragMove = config.onDragMove || null;
+                this.insideVan = config.insideVan || null;
+                this.vanOffsetX = config.vanOffsetX || 0;
+                this.vanOffsetY = config.vanOffsetY || 0;
                 this.isDragged = false;
                 this.zIndex = config.zIndex || 1;
                 this.scale = config.scale || 1.0;
@@ -297,11 +370,19 @@
 
                 // Timers & Reaction Effects
                 this.reactionTimer = 0;
-                this.reactionType = null; // 'happy', 'chewing', 'watered'
+                this.reactionType = null; // 'happy', 'chewing', 'watered', 'rattle', 'window_closed'
                 this.waterParticles = [];
+                this.windowParticles = [];
             }
 
             containsPoint(worldX, worldY, padding = 18) {
+                // If item is inside closed ice cream truck, cannot click through the shutter
+                if (this.insideVan) {
+                    const van = window.entityManager?.entities.find(e => e.id === this.insideVan);
+                    if (van && van.windowOpenProgress < 0.25) {
+                        return false;
+                    }
+                }
                 const left = this.x - (this.w / 2) - padding;
                 const right = this.x + (this.w / 2) + padding;
                 const top = this.y - this.h - padding;
@@ -397,6 +478,43 @@
                         p.life--;
                         if (p.life <= 0) {
                             this.waterParticles.splice(i, 1);
+                        }
+                    }
+                }
+
+                // Ice cream truck window open/close animation & item synchronization
+                if (this.id === 'obj_van') {
+                    const target = this.isWindowOpen ? 1.0 : 0.0;
+                    if (this.windowOpenProgress === undefined) this.windowOpenProgress = 1.0;
+                    this.windowOpenProgress += (target - this.windowOpenProgress) * 0.18;
+                    if (Math.abs(target - this.windowOpenProgress) < 0.005) {
+                        this.windowOpenProgress = target;
+                    }
+
+                    if (this.itemsInside && this.itemsInside.length > 0) {
+                        for (let i = this.itemsInside.length - 1; i >= 0; i--) {
+                            const item = this.itemsInside[i];
+                            if (!item || item.insideVan !== this.id) {
+                                this.itemsInside.splice(i, 1);
+                                continue;
+                            }
+                            if (!item.isDragged) {
+                                item.x = this.x + (item.vanOffsetX || 0);
+                                item.y = this.y + (item.vanOffsetY || 0);
+                            }
+                        }
+                    }
+                }
+
+                // Window particles (star sparkles when opening/closing truck window)
+                if (this.windowParticles && this.windowParticles.length > 0) {
+                    for (let i = this.windowParticles.length - 1; i >= 0; i--) {
+                        const p = this.windowParticles[i];
+                        p.x += p.vx;
+                        p.y += p.vy;
+                        p.life--;
+                        if (p.life <= 0) {
+                            this.windowParticles.splice(i, 1);
                         }
                     }
                 }
@@ -501,6 +619,20 @@
                         return true;
                     }
                 );
+
+                // 6. Item or Person -> Big Ice Cream Truck (Put inside)
+                this.registerRule(
+                    (src) => src.id !== 'obj_van',
+                    (tgt) => tgt.id === 'obj_van',
+                    (item, van) => {
+                        if (!van.isWindowOpen && (van.windowOpenProgress !== undefined && van.windowOpenProgress < 0.25)) {
+                            van.triggerReaction('rattle', 40);
+                            return false;
+                        }
+                        van.putInside(item);
+                        return true;
+                    }
+                );
             }
 
             dropWornItem(person, slot) {
@@ -525,7 +657,21 @@
             }
 
             handleDrop(droppedEntity, releasePos) {
-                const searchRadius = 110;
+                // If dropped entity was inside the ice cream truck, check if released outside
+                if (droppedEntity.insideVan) {
+                    const van = this.entityManager.entities.find(e => e.id === droppedEntity.insideVan);
+                    if (van) {
+                        if (!van.containsPoint(droppedEntity.x, droppedEntity.y, 30)) {
+                            // Taken out of the truck!
+                            van.removeItem(droppedEntity);
+                        } else {
+                            droppedEntity.vanOffsetX = droppedEntity.x - van.x;
+                            droppedEntity.vanOffsetY = droppedEntity.y - van.y;
+                        }
+                    }
+                }
+
+                const searchRadius = 140;
                 let candidates = this.entityManager.getNearbyEntities(droppedEntity.x, droppedEntity.y, searchRadius, droppedEntity);
 
                 for (let tgt of candidates) {
@@ -582,6 +728,11 @@
                             this.draggedEntity = hitEntity;
                             hitEntity.isDragged = true;
 
+                            this.pointerDownScreenX = e.clientX;
+                            this.pointerDownScreenY = e.clientY;
+                            this.pointerDownTime = performance.now();
+                            this.pointerDownWorldPos = { x: worldPos.x, y: worldPos.y };
+
                             if (hitEntity.isSitting) {
                                 hitEntity.isSitting = false;
                                 hitEntity.satChair = null;
@@ -631,8 +782,13 @@
 
                     if (this.draggedEntity) {
                         const worldPos = this.camera.screenToWorld(e.clientX, e.clientY);
+                        const oldX = this.draggedEntity.x;
+                        const oldY = this.draggedEntity.y;
                         this.draggedEntity.x = Math.max(30, Math.min(WORLD_WIDTH - 30, worldPos.x - this.dragOffsetX));
                         this.draggedEntity.y = Math.max(50, Math.min(WORLD_HEIGHT - 30, worldPos.y - this.dragOffsetY));
+                        if (this.draggedEntity.onDragMove) {
+                            this.draggedEntity.onDragMove(this.draggedEntity.x - oldX, this.draggedEntity.y - oldY);
+                        }
                         return;
                     }
 
@@ -681,7 +837,14 @@
                         this.draggedEntity = null;
                         this.canvas.classList.remove('dragging-item');
 
-                        this.interactionManager.handleDrop(releasedEntity, { x: releasedEntity.x, y: releasedEntity.y });
+                        const moveDist = Math.hypot(e.clientX - (this.pointerDownScreenX || e.clientX), e.clientY - (this.pointerDownScreenY || e.clientY));
+                        const timeElapsed = performance.now() - (this.pointerDownTime || 0);
+
+                        if (moveDist < 14 && timeElapsed < 450 && releasedEntity.onClick) {
+                            releasedEntity.onClick(this.pointerDownWorldPos || { x: releasedEntity.x, y: releasedEntity.y });
+                        } else {
+                            this.interactionManager.handleDrop(releasedEntity, { x: releasedEntity.x, y: releasedEntity.y });
+                        }
                     }
 
                     if (this.activePointers.size < 2) {
@@ -782,6 +945,7 @@
             getNearbyEntities(worldX, worldY, radius, excludeEntity = null) {
                 return this.entities.filter(ent => {
                     if (ent === excludeEntity) return false;
+                    if (ent.containsPoint && ent.containsPoint(worldX, worldY, radius)) return true;
                     const dx = ent.x - worldX;
                     const dy = ent.y - worldY;
                     return Math.sqrt(dx * dx + dy * dy) <= radius;
@@ -796,7 +960,7 @@
                 // 1. CHARACTERS
                 const peopleData = [
                     { id: 'p_priya', name: 'Priya', type: 'person', x: 1750, y: 2380, skin: '#8d5524', hair: '#1c1917', hairStyle: 'chic_bob', outfit: '#ec4899', height: 'adult', role: 'Fashion Boutique' },
-                    { id: 'p_leo', name: 'Leo', type: 'person', x: 520, y: 2740, skin: '#ffdbac', hair: '#ea580c', hairStyle: 'curly', outfit: '#facc15', height: 'child', role: 'Kid on Street' },
+                    { id: 'p_leo', name: 'Leo', type: 'person', x: 760, y: 3010, skin: '#ffdbac', hair: '#ea580c', hairStyle: 'curly', outfit: '#facc15', height: 'child', role: 'Kid on Street' },
                     { id: 'p_maya', name: 'Maya', type: 'person', x: 6200, y: 2580, skin: '#e0ac69', hair: '#78350f', hairStyle: 'bun', outfit: '#10b981', height: 'adult', role: 'Gardener' },
                     { id: 'p_nico', name: 'Nico', type: 'person', x: 4050, y: 2380, skin: '#c68642', hair: '#172554', hairStyle: 'chef_hat', outfit: '#f8fafc', height: 'adult', role: 'Chef' },
                     { id: 'p_arthur', name: 'Grandpa Arthur', type: 'person', x: 3450, y: 1780, skin: '#ffdbac', hair: '#94a3b8', hairStyle: 'glasses_grey', outfit: '#3b82f6', height: 'adult', role: 'Reader' },
@@ -822,14 +986,141 @@
                     }));
                 });
 
-                // 2. STREET & ICE CREAM VAN
-                this.add(new Entity({ id: 'obj_van', name: 'Ice Cream Van', category: 'vehicle', x: 380, y: 2880, w: 260, h: 160, draw: (ctx, ent) => this.drawIceCreamVan(ctx, ent) }));
-                this.add(new Entity({ id: 'ic_sign', name: 'Menu Stand', category: 'decor', x: 620, y: 2880, w: 60, h: 90, draw: (ctx, ent) => this.drawIceCreamSign(ctx, ent) }));
-                this.add(new Entity({ id: 'ic_cone1', name: 'Strawberry Cone', category: 'ice_cream', x: 660, y: 2880, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#f43f5e') }));
-                this.add(new Entity({ id: 'ic_cone2', name: 'Mint Cone', category: 'ice_cream', x: 695, y: 2880, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#10b981') }));
-                this.add(new Entity({ id: 'ic_tub', name: 'Sundae Tub', category: 'ice_cream', x: 730, y: 2880, w: 36, h: 40, draw: (ctx, ent) => this.drawSundae(ctx, ent) }));
-                this.add(new Entity({ id: 'str_bench', name: 'Park Bench', category: 'chair', x: 860, y: 2880, w: 120, h: 65, draw: (ctx, ent) => this.drawBench(ctx, ent) }));
-                this.add(new Entity({ id: 'str_hydrant', name: 'Fire Hydrant', category: 'decor', x: 180, y: 2880, w: 34, h: 55, draw: (ctx, ent) => this.drawHydrant(ctx, ent) }));
+                // 2. STREET & BIG INTERACTIVE ICE CREAM TRUCK
+                const van = new Entity({
+                    id: 'obj_van',
+                    name: 'Ice Cream Truck',
+                    category: 'vehicle',
+                    x: 440,
+                    y: 3010,
+                    w: 520,
+                    h: 320,
+                    draw: (ctx, ent) => this.drawIceCreamVan(ctx, ent),
+                    drawForeground: (ctx, ent) => this.drawIceCreamVanForeground(ctx, ent)
+                });
+                van.isWindowOpen = true;
+                van.windowOpenProgress = 1.0;
+                van.itemsInside = [];
+                van.windowParticles = [];
+
+                van.toggleWindow = function() {
+                    this.isWindowOpen = !this.isWindowOpen;
+                    this.triggerReaction(this.isWindowOpen ? 'happy' : 'window_closed', 40);
+                    if (!this.windowParticles) this.windowParticles = [];
+                    for (let i = 0; i < 16; i++) {
+                        this.windowParticles.push({
+                            x: this.x - 40 + (Math.random() * 220 - 110),
+                            y: this.y - 150 + (Math.random() * 80 - 40),
+                            vx: (Math.random() - 0.5) * 3.5,
+                            vy: (Math.random() - 0.5) * 3.5 - 1.2,
+                            color: this.isWindowOpen ? '#38bdf8' : '#f43f5e',
+                            size: Math.random() * 6 + 4,
+                            life: 26
+                        });
+                    }
+                };
+
+                van.onClick = function(worldPos) {
+                    this.toggleWindow();
+                };
+
+                van.onDragMove = function(dx, dy) {
+                    if (this.itemsInside) {
+                        this.itemsInside.forEach(item => {
+                            if (item.insideVan === this.id && !item.isDragged) {
+                                item.x += dx;
+                                item.y += dy;
+                            }
+                        });
+                    }
+                };
+
+                van.putInside = function(item) {
+                    if (!this.itemsInside) this.itemsInside = [];
+                    if (!this.itemsInside.includes(item)) {
+                        this.itemsInside.push(item);
+                    }
+                    item.insideVan = this.id;
+
+                    if (item.type === 'person') {
+                        if (item.x > this.x + 60) {
+                            // Driver cabin seat
+                            item.x = this.x + 160;
+                            item.y = this.y - 70;
+                            item.facingLeft = false;
+                        } else {
+                            // Service vendor spot behind counter
+                            item.x = Math.max(this.x - 120, Math.min(this.x + 30, item.x));
+                            item.y = this.y - 95;
+                            item.facingLeft = true;
+                        }
+                        item.isSitting = false;
+                        item.satChair = null;
+                        item.state = 'idle';
+                        item.triggerReaction('happy', 80);
+                    } else {
+                        // Place item neatly on the counter shelf
+                        item.y = this.y - 105;
+                        item.x = Math.max(this.x - 145, Math.min(this.x + 65, item.x));
+                    }
+
+                    item.vanOffsetX = item.x - this.x;
+                    item.vanOffsetY = item.y - this.y;
+                    window.entityManager?.bringToTop(item);
+                    this.triggerReaction('happy', 45);
+                };
+
+                van.removeItem = function(item) {
+                    if (this.itemsInside) {
+                        const idx = this.itemsInside.indexOf(item);
+                        if (idx > -1) this.itemsInside.splice(idx, 1);
+                    }
+                    item.insideVan = null;
+                    item.vanOffsetX = null;
+                    item.vanOffsetY = null;
+                };
+
+                this.add(van);
+
+                // Initial treats stocked neatly inside the truck counter
+                const cone1 = new Entity({ id: 'ic_cone1', name: 'Strawberry Cone', category: 'ice_cream', x: 340, y: 2905, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#f43f5e') });
+                cone1.insideVan = 'obj_van';
+                cone1.vanOffsetX = cone1.x - van.x;
+                cone1.vanOffsetY = cone1.y - van.y;
+                van.itemsInside.push(cone1);
+                this.add(cone1);
+
+                const cone2 = new Entity({ id: 'ic_cone2', name: 'Mint Cone', category: 'ice_cream', x: 380, y: 2905, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#10b981') });
+                cone2.insideVan = 'obj_van';
+                cone2.vanOffsetX = cone2.x - van.x;
+                cone2.vanOffsetY = cone2.y - van.y;
+                van.itemsInside.push(cone2);
+                this.add(cone2);
+
+                const cone3 = new Entity({ id: 'ic_cone3', name: 'Choco Cone', category: 'ice_cream', x: 420, y: 2905, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#78350f') });
+                cone3.insideVan = 'obj_van';
+                cone3.vanOffsetX = cone3.x - van.x;
+                cone3.vanOffsetY = cone3.y - van.y;
+                van.itemsInside.push(cone3);
+                this.add(cone3);
+
+                const sundae = new Entity({ id: 'ic_tub', name: 'Sundae Tub', category: 'ice_cream', x: 460, y: 2905, w: 36, h: 40, draw: (ctx, ent) => this.drawSundae(ctx, ent) });
+                sundae.insideVan = 'obj_van';
+                sundae.vanOffsetX = sundae.x - van.x;
+                sundae.vanOffsetY = sundae.y - van.y;
+                van.itemsInside.push(sundae);
+                this.add(sundae);
+
+                const pop = new Entity({ id: 'ic_pop', name: 'Rainbow Popsicle', category: 'ice_cream', x: 500, y: 2905, w: 28, h: 46, draw: (ctx, ent) => this.drawPopsicle(ctx, ent) });
+                pop.insideVan = 'obj_van';
+                pop.vanOffsetX = pop.x - van.x;
+                pop.vanOffsetY = pop.y - van.y;
+                van.itemsInside.push(pop);
+                this.add(pop);
+
+                this.add(new Entity({ id: 'ic_sign', name: 'Menu Stand', category: 'decor', x: 720, y: 3010, w: 60, h: 90, draw: (ctx, ent) => this.drawIceCreamSign(ctx, ent) }));
+                this.add(new Entity({ id: 'str_bench', name: 'Park Bench', category: 'chair', x: 920, y: 3010, w: 120, h: 65, draw: (ctx, ent) => this.drawBench(ctx, ent) }));
+                this.add(new Entity({ id: 'str_hydrant', name: 'Fire Hydrant', category: 'decor', x: 100, y: 3010, w: 34, h: 55, draw: (ctx, ent) => this.drawHydrant(ctx, ent) }));
 
                 // 3. LAUNDRY NOOK (Ground Floor Left)
                 this.add(new Entity({ id: 'laun_basket', name: 'Laundry Basket', category: 'decor', x: 1200, y: 3080, w: 55, h: 45, draw: (ctx, ent) => this.drawLaundryBasket(ctx, ent) }));
@@ -1101,34 +1392,468 @@
             }
 
             drawIceCreamVan(ctx, ent) {
-                const idleBounce = Math.sin(Date.now() / 450) * 1.5;
+                const idleBounce = Math.sin(Date.now() / 420) * 1.5;
                 ctx.save();
                 ctx.translate(0, idleBounce);
 
-                ctx.fillStyle = '#fce7f3';
-                ctx.roundRect(-120, -140, 240, 120, 16);
-                ctx.fill();
-
-                ctx.fillStyle = '#f43f5e';
-                ctx.fillRect(-120, -140, 240, 25);
-
-                ctx.fillStyle = '#fde047';
+                // 1. CHASSIS & WHEELS
+                // Ground contact shadow
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
                 ctx.beginPath();
-                ctx.moveTo(-15, -140); ctx.lineTo(0, -180); ctx.lineTo(15, -140);
+                ctx.ellipse(0, -6, 235, 14, 0, 0, Math.PI * 2);
                 ctx.fill();
+
+                // Underbody frame
+                ctx.fillStyle = '#334155';
+                ctx.fillRect(-220, -58, 440, 16);
+
+                // Rear wheel (-145, -40) and Front wheel (+165, -40)
+                const drawWheel = (wx) => {
+                    // Outer rubber tire with tread notches
+                    ctx.fillStyle = '#1e293b';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 42, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Whitewall ring
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 30, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Chrome hub rim
+                    ctx.fillStyle = '#cbd5e1';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 22, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Center pink cap
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                };
+
+                // 2. MAIN TRUCK BODY
+                // Silhouette: -245 to +245, y: -245 to -55
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(-245, -55);
+                ctx.lineTo(-245, -230);
+                ctx.quadraticCurveTo(-245, -245, -230, -245);
+                ctx.lineTo(100, -245);
+                ctx.quadraticCurveTo(115, -245, 125, -235);
+                ctx.lineTo(220, -145);
+                ctx.quadraticCurveTo(240, -135, 245, -115);
+                ctx.lineTo(245, -55);
+                ctx.closePath();
+                ctx.clip();
+
+                // Top half: Creamy Vanilla (#fffbeb)
+                ctx.fillStyle = '#fffbeb';
+                ctx.fillRect(-250, -250, 500, 200);
+
+                // Bottom half: Strawberry Pink (#f43f5e)
+                ctx.fillStyle = '#f43f5e';
+                ctx.fillRect(-250, -140, 500, 90);
+
+                // Chrome gold dividing accent strip
+                ctx.fillStyle = '#f59e0b';
+                ctx.fillRect(-250, -144, 500, 7);
+
+                // Scalloped bottom skirt wave
+                ctx.fillStyle = '#ffe4e6';
+                for (let wx = -240; wx <= 240; wx += 24) {
+                    ctx.beginPath();
+                    ctx.arc(wx, -55, 12, Math.PI, 0);
+                    ctx.fill();
+                }
+                ctx.restore();
+
+                // Body border outline
+                ctx.strokeStyle = '#e11d48';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.moveTo(-245, -55);
+                ctx.lineTo(-245, -230);
+                ctx.quadraticCurveTo(-245, -245, -230, -245);
+                ctx.lineTo(100, -245);
+                ctx.quadraticCurveTo(115, -245, 125, -235);
+                ctx.lineTo(220, -145);
+                ctx.quadraticCurveTo(240, -135, 245, -115);
+                ctx.lineTo(245, -55);
+                ctx.stroke();
+
+                // 3. FRONT CABIN & WINDSHIELD (Driver side on right)
+                // Windshield Glass
+                ctx.fillStyle = 'rgba(224, 242, 254, 0.7)';
+                ctx.strokeStyle = '#38bdf8';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(125, -235);
+                ctx.lineTo(215, -148);
+                ctx.lineTo(135, -148);
+                ctx.lineTo(120, -225);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+
+                // Driver Seat & Steering Wheel
+                ctx.fillStyle = '#78350f';
+                ctx.fillRect(145, -125, 30, 35);
+                ctx.strokeStyle = '#1e293b';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.ellipse(185, -165, 14, 8, -Math.PI / 6, 0, Math.PI * 2);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(185, -165);
+                ctx.lineTo(175, -140);
+                ctx.stroke();
+
+                // Front Headlight & Amber Turn Signal
+                ctx.fillStyle = '#fef08a';
+                ctx.strokeStyle = '#f59e0b';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.arc(242, -90, 10, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.stroke();
+                // Amber turn signal
+                ctx.fillStyle = '#f97316';
+                ctx.fillRect(238, -112, 7, 10);
+
+                // Front Chrome Bumper
+                ctx.fillStyle = '#e2e8f0';
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.roundRect(232, -62, 18, 16, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                // Rear Chrome Bumper
+                ctx.beginPath();
+                ctx.roundRect(-252, -62, 16, 16, 6);
+                ctx.fill();
+                ctx.stroke();
+
+                // 4. INTERIOR SERVING COUNTER (Cutout Window: x: -160 to +75, y: -220 to -95)
+                ctx.save();
+                ctx.beginPath();
+                ctx.rect(-160, -220, 235, 125);
+                ctx.clip();
+
+                // Interior Back Wall: Diamond Checkered Pastel Tiles
+                ctx.fillStyle = '#f0fdf4';
+                ctx.fillRect(-160, -220, 235, 125);
+                ctx.strokeStyle = '#bbf7d0';
+                ctx.lineWidth = 1;
+                for (let tx = -160; tx < 75; tx += 20) {
+                    ctx.beginPath();
+                    ctx.moveTo(tx, -220);
+                    ctx.lineTo(tx + 40, -95);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(tx + 40, -220);
+                    ctx.lineTo(tx, -95);
+                    ctx.stroke();
+                }
+
+                // Warm Interior Spotlight glow
+                const interiorGlow = ctx.createRadialGradient(-40, -180, 10, -40, -180, 120);
+                interiorGlow.addColorStop(0, 'rgba(254, 240, 138, 0.35)');
+                interiorGlow.addColorStop(1, 'rgba(254, 240, 138, 0)');
+                ctx.fillStyle = interiorGlow;
+                ctx.fillRect(-160, -220, 235, 125);
+
+                // Back Wall Shelving with Syrup Bottles
+                ctx.fillStyle = '#fce7f3';
+                ctx.fillRect(-155, -178, 120, 6);
+                // Strawberry Syrup
+                ctx.fillStyle = '#ef4444';
+                ctx.fillRect(-150, -195, 10, 17);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(-148, -199, 6, 4);
+                // Blueberry Syrup
+                ctx.fillStyle = '#3b82f6';
+                ctx.fillRect(-135, -195, 10, 17);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(-133, -199, 6, 4);
+                // Caramel Syrup
+                ctx.fillStyle = '#d97706';
+                ctx.fillRect(-120, -195, 10, 17);
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(-118, -199, 6, 4);
+                // Sprinkles Jar
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
+                ctx.strokeStyle = '#e2e8f0';
+                ctx.lineWidth = 1;
+                ctx.fillRect(-100, -194, 16, 16);
+                ctx.strokeRect(-100, -194, 16, 16);
+                ctx.fillStyle = '#ec4899';
+                ctx.fillRect(-98, -188, 3, 3);
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillRect(-93, -186, 3, 3);
+                ctx.fillStyle = '#facc15';
+                ctx.fillRect(-89, -190, 3, 3);
+
+                // Soft-Serve Ice Cream Dispenser Machine (Mounted on left inside)
+                ctx.fillStyle = '#e2e8f0';
+                ctx.strokeStyle = '#94a3b8';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.roundRect(-155, -165, 45, 60, 4);
+                ctx.fill();
+                ctx.stroke();
+                // Machine digital display
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillRect(-150, -160, 35, 12);
+                // Dispensing levers
+                ctx.strokeStyle = '#64748b';
+                ctx.lineWidth = 3;
+                ctx.beginPath();
+                ctx.moveTo(-145, -145); ctx.lineTo(-145, -135);
+                ctx.moveTo(-138, -145); ctx.lineTo(-138, -135);
+                ctx.moveTo(-131, -145); ctx.lineTo(-131, -135);
+                ctx.stroke();
+                // Chrome nozzles
+                ctx.fillStyle = '#cbd5e1';
+                ctx.fillRect(-147, -135, 6, 8);
+                ctx.fillRect(-134, -135, 6, 8);
+
+                // Built-in Ice Cream Freezer Tub Counter
+                ctx.fillStyle = '#ffe4e6';
+                ctx.fillRect(-160, -112, 235, 18);
+                ctx.strokeStyle = '#f43f5e';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(-160, -112, 235, 18);
+
+                // 4 Round Ice Cream Tubs set into counter
+                const tubColors = ['#451a03', '#fb7185', '#4ade80', '#fde047'];
+                for (let ti = 0; ti < 4; ti++) {
+                    const tx = -100 + ti * 40;
+                    ctx.fillStyle = '#94a3b8';
+                    ctx.beginPath();
+                    ctx.arc(tx, -103, 14, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.fillStyle = tubColors[ti];
+                    ctx.beginPath();
+                    ctx.arc(tx, -103, 11, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Chrome rim
+                    ctx.strokeStyle = '#e2e8f0';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(tx, -103, 13, 0, Math.PI * 2);
+                    ctx.stroke();
+                }
+                ctx.restore();
+
+                // Draw wheels in front of underbody
+                drawWheel(-145);
+                drawWheel(165);
+
+                // Wheel arch fenders
+                ctx.strokeStyle = '#be123c';
+                ctx.lineWidth = 4;
+                ctx.beginPath();
+                ctx.arc(-145, -40, 48, Math.PI * 1.15, Math.PI * 1.85);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.arc(165, -40, 48, Math.PI * 1.15, Math.PI * 1.85);
+                ctx.stroke();
+
+                // 5. GIANT ROOF ICE CREAM SCULPTURE
+                // Waffle Cone (Pointing down into roof mount at x = -40, y = -245)
+                ctx.fillStyle = '#d97706';
+                ctx.beginPath();
+                ctx.moveTo(-70, -245);
+                ctx.lineTo(-10, -245);
+                ctx.lineTo(-40, -195);
+                ctx.closePath();
+                ctx.fill();
+                ctx.strokeStyle = '#b45309';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Swirling Giant Soft-Serve Scoops billowing UP above the roof!
+                // Scoop 1 (Vanilla)
+                ctx.fillStyle = '#fffbeb';
+                ctx.beginPath();
+                ctx.arc(-40, -270, 32, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.strokeStyle = '#fef08a';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Scoop 2 (Strawberry)
                 ctx.fillStyle = '#fb7185';
                 ctx.beginPath();
-                ctx.arc(0, -185, 18, 0, Math.PI * 2);
+                ctx.arc(-40, -315, 26, 0, Math.PI * 2);
                 ctx.fill();
+                ctx.strokeStyle = '#f43f5e';
+                ctx.lineWidth = 2;
+                ctx.stroke();
 
-                ctx.fillStyle = '#38bdf8';
-                ctx.fillRect(-60, -100, 100, 50);
-
-                ctx.fillStyle = '#1e293b';
+                // Scoop 3 (Chocolate Swirl Peak)
+                ctx.fillStyle = '#78350f';
                 ctx.beginPath();
-                ctx.arc(-70, -20, 22, 0, Math.PI * 2);
-                ctx.arc(70, -20, 22, 0, Math.PI * 2);
+                ctx.arc(-40, -350, 18, 0, Math.PI * 2);
                 ctx.fill();
+
+                // Glossy Red Cherry on Top with Stem
+                ctx.fillStyle = '#dc2626';
+                ctx.beginPath();
+                ctx.arc(-40, -372, 10, 0, Math.PI * 2);
+                ctx.fill();
+                // Cherry highlight
+                ctx.fillStyle = '#fca5a5';
+                ctx.beginPath();
+                ctx.arc(-43, -374, 3, 0, Math.PI * 2);
+                ctx.fill();
+                // Stem
+                ctx.strokeStyle = '#78350f';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                ctx.moveTo(-40, -382);
+                ctx.quadraticCurveTo(-34, -396, -26, -392);
+                ctx.stroke();
+
+                // Rainbow Sprinkles on Roof Ice Cream
+                const sprinkleColors = ['#ef4444', '#3b82f6', '#10b981', '#f59e0b', '#ec4899'];
+                const sprinkles = [
+                    { x: -55, y: -275, c: 0 }, { x: -30, y: -268, c: 1 }, { x: -20, y: -280, c: 2 },
+                    { x: -48, y: -315, c: 3 }, { x: -28, y: -320, c: 4 }, { x: -42, y: -345, c: 0 }
+                ];
+                sprinkles.forEach(s => {
+                    ctx.fillStyle = sprinkleColors[s.c];
+                    ctx.fillRect(s.x, s.y, 4, 4);
+                });
+
+                ctx.restore();
+            }
+
+            drawIceCreamVanForeground(ctx, ent) {
+                const idleBounce = Math.sin(Date.now() / 420) * 1.5;
+                ctx.save();
+                ctx.translate(0, idleBounce);
+
+                // Window Bounds: x: -160 to +75 (w: 235), y: -220 to -95 (h: 125)
+                const openP = ent.windowOpenProgress !== undefined ? ent.windowOpenProgress : (ent.isWindowOpen ? 1.0 : 0.0);
+                const shutterH = (1.0 - openP) * 125;
+
+                // 1. SLIDING SHUTTER (Draws over items when closing/closed)
+                if (shutterH > 2) {
+                    ctx.save();
+                    ctx.beginPath();
+                    ctx.rect(-160, -220, 235, shutterH);
+                    ctx.clip();
+
+                    // Shutter background
+                    ctx.fillStyle = '#bae6fd';
+                    ctx.fillRect(-160, -220, 235, shutterH);
+
+                    // Horizontal slats
+                    ctx.strokeStyle = '#7dd3fc';
+                    ctx.lineWidth = 2;
+                    for (let sy = -220; sy < -220 + shutterH; sy += 12) {
+                        ctx.beginPath();
+                        ctx.moveTo(-160, sy);
+                        ctx.lineTo(75, sy);
+                        ctx.stroke();
+                    }
+
+                    // Bottom rail & grab handle
+                    ctx.fillStyle = '#0284c7';
+                    ctx.fillRect(-160, -220 + shutterH - 8, 235, 8);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(-45, -220 + shutterH - 12, 40, 6);
+
+                    // If closed or mostly closed, display sign
+                    if (openP < 0.25) {
+                        ctx.fillStyle = '#0369a1';
+                        ctx.font = 'bold 16px sans-serif';
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'middle';
+                        ctx.fillText('🍦 CLOSED', -42, -155);
+                    }
+                    ctx.restore();
+                }
+
+                // 2. WINDOW FRAME & COUNTER SILL
+                // Molded Window Outer Border
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                ctx.roundRect(-163, -223, 241, 131, 6);
+                ctx.stroke();
+
+                // Lower serving counter sill ledge
+                ctx.fillStyle = '#fce7f3';
+                ctx.fillRect(-168, -95, 251, 8);
+                ctx.strokeStyle = '#f43f5e';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(-168, -95, 251, 8);
+
+                // 3. AWNING ABOVE WINDOW
+                this.drawTruckAwning(ctx, -172, -248, 258, 28);
+
+                // 4. INTERACTIVE WINDOW OPEN / CLOSE BUTTON
+                const isClosed = ent.windowOpenProgress < 0.3;
+                ctx.save();
+                ctx.translate(50, -238);
+                // Button background with soft shadow
+                ctx.fillStyle = isClosed ? '#ec4899' : '#10b981';
+                ctx.beginPath();
+                ctx.roundRect(-24, -13, 48, 26, 13);
+                ctx.fill();
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 2;
+                ctx.stroke();
+
+                // Button icon & label
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 12px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText(isClosed ? '🪟 ⬆️' : '🪟 ⬇️', 0, 0);
+                ctx.restore();
+
+                // 5. WINDOW SPARKLE PARTICLES
+                if (ent.windowParticles && ent.windowParticles.length > 0) {
+                    ent.windowParticles.forEach(p => {
+                        ctx.fillStyle = p.color;
+                        ctx.globalAlpha = Math.max(0, p.life / 26);
+                        ctx.beginPath();
+                        ctx.arc(p.x - ent.x, p.y - ent.y, p.size, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.globalAlpha = 1.0;
+                    });
+                }
+
+                ctx.restore();
+            }
+
+            drawTruckAwning(ctx, x, y, w, h) {
+                ctx.save();
+                const stripes = 8;
+                const stripeW = w / stripes;
+                for (let i = 0; i < stripes; i++) {
+                    ctx.fillStyle = i % 2 === 0 ? '#f43f5e' : '#fffbeb';
+                    ctx.beginPath();
+                    ctx.moveTo(x + i * stripeW, y);
+                    ctx.lineTo(x + (i + 1) * stripeW, y);
+                    ctx.lineTo(x + (i + 1) * stripeW, y + h);
+                    ctx.lineTo(x + i * stripeW, y + h);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // Scallop bottom arc
+                    ctx.beginPath();
+                    ctx.arc(x + (i + 0.5) * stripeW, y + h, stripeW / 2, 0, Math.PI);
+                    ctx.fill();
+                }
                 ctx.restore();
             }
 
@@ -1164,6 +1889,27 @@
                 ctx.beginPath();
                 ctx.arc(0, -18, 12, 0, Math.PI * 2);
                 ctx.fill();
+            }
+
+            drawPopsicle(ctx, ent) {
+                // Wooden stick
+                ctx.fillStyle = '#d97706';
+                ctx.fillRect(-3, -12, 6, 16);
+                // 3 flavor layers: Cherry, Lemon, Sky-Blue
+                ctx.fillStyle = '#ef4444';
+                ctx.beginPath();
+                ctx.arc(0, -32, 10, Math.PI, 0);
+                ctx.lineTo(10, -22);
+                ctx.lineTo(-10, -22);
+                ctx.closePath();
+                ctx.fill();
+                ctx.fillStyle = '#facc15';
+                ctx.fillRect(-10, -22, 20, 8);
+                ctx.fillStyle = '#38bdf8';
+                ctx.fillRect(-10, -14, 20, 8);
+                // Frost highlight
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.fillRect(-8, -30, 4, 20);
             }
 
             drawHydrant(ctx, ent) {
@@ -1646,7 +2392,6 @@
                 this.drawBuildingStructure(ctx);
                 this.drawCirculationStairs(ctx);
                 this.drawRoofsAndBalconies(ctx);
-                this.drawRoomLabels(ctx);
 
                 this.entityManager.updateAll();
                 this.drawEntities(ctx);
@@ -1700,30 +2445,31 @@
 
             drawStreetZone(ctx) {
                 ctx.fillStyle = '#475569';
-                ctx.fillRect(0, 2800, 1100, 300);
+                ctx.fillRect(0, 2750, 1100, 350);
 
                 ctx.fillStyle = '#cbd5e1';
-                ctx.fillRect(0, 2750, 1100, 50);
+                ctx.fillRect(0, 2710, 1100, 40);
 
                 ctx.strokeStyle = '#facc15';
                 ctx.lineWidth = 8;
                 ctx.setLineDash([40, 30]);
                 ctx.beginPath();
-                ctx.moveTo(0, 2950);
-                ctx.lineTo(1100, 2950);
+                ctx.moveTo(0, 3030);
+                ctx.lineTo(1100, 3030);
                 ctx.stroke();
                 ctx.setLineDash([]);
 
-                ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
-                ctx.fillRect(150, 2820, 500, 130);
-                ctx.strokeStyle = '#ffffff';
+                // Enlarged Ice Cream Truck Parking Bay
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
+                ctx.fillRect(160, 2780, 560, 230);
+                ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
                 ctx.lineWidth = 4;
-                ctx.strokeRect(150, 2820, 500, 130);
+                ctx.strokeRect(160, 2780, 560, 230);
 
-                ctx.fillStyle = '#fef08a';
-                ctx.font = 'bold 24px sans-serif';
+                ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+                ctx.font = 'bold 36px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText('🍦 ICE-CREAM VAN PARKING SPOT', 400, 2895);
+                ctx.fillText('🍦 🅿️', 440, 2850);
             }
 
             drawEastGardenZone(ctx) {
@@ -1845,21 +2591,21 @@
             }
 
             drawRoomLabels(ctx) {
-                ROOMS_DATA.forEach(r => {
-                    const textColor = r.darkText === false ? '#ffffff' : '#1e293b';
-
-                    ctx.fillStyle = 'rgba(255, 255, 255, 0.88)';
-                    this.drawRoundedRect(ctx, r.x + 20, r.y + 20, Math.min(r.w - 40, 260), 44, 14, true, false);
-
-                    ctx.fillStyle = textColor;
-                    ctx.font = 'bold 16px sans-serif';
-                    ctx.textAlign = 'left';
-                    ctx.fillText(r.name, r.x + 35, r.y + 48);
-                });
+                // Written headings removed per design requirements
             }
 
             drawEntities(ctx) {
-                this.entityManager.entities.forEach(ent => {
+                // Ensure the ice cream van background renders before entities inside it,
+                // and any dragged entity is at the very top.
+                const sortedEntities = [...this.entityManager.entities].sort((a, b) => {
+                    if (a.isDragged) return 1;
+                    if (b.isDragged) return -1;
+                    if (a.id === 'obj_van') return -1;
+                    if (b.id === 'obj_van') return 1;
+                    return (a.y || 0) - (b.y || 0);
+                });
+
+                sortedEntities.forEach(ent => {
                     ctx.save();
                     ctx.translate(ent.x, ent.y);
 
@@ -1882,15 +2628,28 @@
                         if (ent.draw) ent.draw(ctx, ent);
                         ctx.restore();
                     } else {
-                        ctx.fillStyle = 'rgba(15, 23, 42, 0.12)';
-                        ctx.beginPath();
-                        ctx.ellipse(0, 0, ent.w * 0.45, 6, 0, 0, Math.PI * 2);
-                        ctx.fill();
+                        // Skip ground contact shadow for items resting inside truck counter
+                        if (!ent.insideVan) {
+                            ctx.fillStyle = 'rgba(15, 23, 42, 0.12)';
+                            ctx.beginPath();
+                            ctx.ellipse(0, 0, ent.w * 0.45, 6, 0, 0, Math.PI * 2);
+                            ctx.fill();
+                        }
 
                         if (ent.draw) ent.draw(ctx, ent);
                     }
 
                     ctx.restore();
+                });
+
+                // Foreground layer pass (e.g. Ice cream truck sliding shutter, frame, and awning over seated vendors/treats)
+                sortedEntities.forEach(ent => {
+                    if (ent.drawForeground && !ent.isDragged) {
+                        ctx.save();
+                        ctx.translate(ent.x, ent.y);
+                        ent.drawForeground(ctx, ent);
+                        ctx.restore();
+                    }
                 });
             }
 
@@ -1940,17 +2699,98 @@
             window.addEventListener('resize', handleResize);
             handleResize();
 
-            const debugText = document.getElementById('camera-debug-info');
+            // PWA Install Prompt & Standalone Mode Handling
+            let deferredInstallPrompt = null;
+            const installBtn = document.getElementById('pwa-install-btn');
+            const isStandalone = window.matchMedia('(display-mode: standalone)').matches || 
+                                 (window.navigator && window.navigator.standalone === true);
+
+            if (!isStandalone) {
+                window.addEventListener('beforeinstallprompt', (e) => {
+                    e.preventDefault();
+                    deferredInstallPrompt = e;
+                    if (installBtn) {
+                        installBtn.classList.remove('hidden');
+                        installBtn.classList.add('flex');
+                    }
+                });
+
+                window.addEventListener('appinstalled', () => {
+                    if (installBtn) {
+                        installBtn.classList.add('hidden');
+                        installBtn.classList.remove('flex');
+                    }
+                    deferredInstallPrompt = null;
+                });
+
+                if (installBtn) {
+                    installBtn.addEventListener('click', async () => {
+                        if (deferredInstallPrompt) {
+                            deferredInstallPrompt.prompt();
+                            const choice = await deferredInstallPrompt.userChoice;
+                            if (choice && choice.outcome === 'accepted') {
+                                installBtn.classList.add('hidden');
+                                installBtn.classList.remove('flex');
+                            }
+                            deferredInstallPrompt = null;
+                        } else {
+                            const iosModal = document.getElementById('ios-install-modal');
+                            if (iosModal) {
+                                iosModal.classList.remove('hidden');
+                                iosModal.classList.add('flex');
+                            }
+                        }
+                    });
+                }
+
+                // Detect iOS Safari
+                const ua = window.navigator.userAgent.toLowerCase();
+                const isIOS = /iphone|ipad|ipod/.test(ua);
+                if (isIOS && installBtn) {
+                    installBtn.classList.remove('hidden');
+                    installBtn.classList.add('flex');
+                }
+            }
+
+            // Register Service Worker for Offline PWA Support
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/sw.js').catch(() => {});
+                });
+            }
+
+            // Landscape Mode Orientation Handling
+            function checkOrientation() {
+                const isPortrait = window.innerHeight > window.innerWidth && window.innerWidth <= 1024;
+                const overlay = document.getElementById('landscape-prompt-overlay');
+                if (overlay) {
+                    overlay.style.display = isPortrait ? 'flex' : 'none';
+                }
+
+                // Attempt native screen orientation lock
+                if (!isPortrait && screen.orientation && screen.orientation.lock) {
+                    try {
+                        screen.orientation.lock('landscape').catch(() => {});
+                    } catch (err) {}
+                }
+            }
+
+            window.addEventListener('resize', checkOrientation);
+            window.addEventListener('orientationchange', checkOrientation);
+            checkOrientation();
+
+            // Attempt orientation lock on first touch/interaction
+            window.addEventListener('pointerdown', () => {
+                if (screen.orientation && screen.orientation.lock) {
+                    try {
+                        screen.orientation.lock('landscape').catch(() => {});
+                    } catch (err) {}
+                }
+            }, { once: true });
 
             function animationFrameLoop() {
                 camera.update();
-
-                if (debugText) {
-                    debugText.innerText = `Cam: (${Math.round(camera.x)}, ${Math.round(camera.y)}) | Items: ${entityManager.entities.length}`;
-                }
-
                 renderer.render(camera);
-
                 requestAnimationFrame(animationFrameLoop);
             }
 
