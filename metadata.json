@@ -1,0 +1,6 @@
+{
+  "name": "Dollhouse Play World",
+  "description": "Interactive digital dollhouse play world with interactive characters, rooms, and items",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
