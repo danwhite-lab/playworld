@@ -227,9 +227,10 @@
                 this.vy = 0;
                 this.friction = 0.92;
 
+                // Stable presentation scale: room buttons pan, but never zoom.
                 this.zoom = 0.85;
-                this.minZoom = 0.45;
-                this.maxZoom = 1.35;
+                this.minZoom = 0.85;
+                this.maxZoom = 0.85;
 
                 this.isDragging = false;
                 this.lastPointerX = 0;
@@ -1007,8 +1008,9 @@
                 ];
 
                 peopleData.forEach(p => {
-                    const charH = p.height === 'adult' ? 120 : (p.height === 'child' ? 90 : 70);
-                    const charW = p.height === 'adult' ? 55 : (p.height === 'child' ? 45 : 40);
+                    const charScale = 1.4;
+                    const charH = (p.height === 'adult' ? 120 : (p.height === 'child' ? 90 : 70)) * charScale;
+                    const charW = (p.height === 'adult' ? 55 : (p.height === 'child' ? 45 : 40)) * charScale;
 
                     this.add(new Entity({
                         id: p.id,
@@ -1312,6 +1314,10 @@
                 lift.onClick = function() { if (Math.abs(this.cabinY - this.targetY) > 2) return; this.floorIndex = (this.floorIndex + 1) % liftFloors.length; this.targetY = liftFloors[this.floorIndex]; const nearby = window.entityManager?.entities.find(e => e.type === 'person' && Math.abs(e.x - this.x) < 180 && Math.abs(e.y - this.cabinY) < 150); if (nearby) { this.occupant = nearby; nearby.isSitting = false; nearby.state = 'idle'; } this.triggerReaction('happy', 40); };
                 lift.update = function() { const delta = this.targetY - this.cabinY; this.cabinY += Math.abs(delta) < 1 ? delta : delta * 0.08; if (this.occupant) { this.occupant.x = this.x; this.occupant.y = this.cabinY; } if (Math.abs(delta) < 1) this.occupant = null; Entity.prototype.update.call(this); };
                 this.add(lift);
+                ['kit_counter', 'din_table', 'art_desk', 'obs_telescope', 'liv_sofa', 'mus_piano', 'gar_bench'].forEach(id => {
+                    const item = this.entities.find(entity => entity.id === id);
+                    if (item) item.presentationScale = 1.18;
+                });
             }
 
             drawPerson(ctx, ent) {
@@ -2700,6 +2706,7 @@
                 sortedEntities.forEach(ent => {
                     ctx.save();
                     ctx.translate(ent.x, ent.y);
+                    if (ent.presentationScale) ctx.scale(ent.presentationScale, ent.presentationScale);
 
                     if (ent.isDragged) {
                         ctx.save();
