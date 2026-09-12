@@ -333,6 +333,7 @@
                 this.vanOffsetX = config.vanOffsetX || 0;
                 this.vanOffsetY = config.vanOffsetY || 0;
                 this.isDragged = false;
+                this.draggable = config.draggable !== false;
                 this.zIndex = config.zIndex || 1;
                 this.scale = config.scale || 1.0;
                 this.details = config.details || {};
@@ -710,6 +711,7 @@
                 this.initialZoom = 1.0;
 
                 this.draggedEntity = null;
+                this.clickedEntity = null;
                 this.dragOffsetX = 0;
                 this.dragOffsetY = 0;
 
@@ -725,8 +727,9 @@
                         const hitEntity = this.entityManager.findEntityAt(worldPos.x, worldPos.y);
 
                         if (hitEntity) {
-                            this.draggedEntity = hitEntity;
-                            hitEntity.isDragged = true;
+                            this.clickedEntity = hitEntity.draggable ? null : hitEntity;
+                            this.draggedEntity = hitEntity.draggable ? hitEntity : null;
+                            hitEntity.isDragged = hitEntity.draggable;
 
                             this.pointerDownScreenX = e.clientX;
                             this.pointerDownScreenY = e.clientY;
@@ -742,8 +745,10 @@
                             this.dragOffsetX = worldPos.x - hitEntity.x;
                             this.dragOffsetY = worldPos.y - hitEntity.y;
 
-                            this.entityManager.bringToTop(hitEntity);
-                            this.canvas.classList.add('dragging-item');
+                            if (hitEntity.draggable) {
+                                this.entityManager.bringToTop(hitEntity);
+                                this.canvas.classList.add('dragging-item');
+                            }
                         } else {
                             this.camera.isDragging = true;
                             this.camera.targetX = null;
@@ -757,6 +762,7 @@
                             this.canvas.classList.add('grabbing');
                         }
                     } else if (this.activePointers.size === 2) {
+                        this.clickedEntity = null;
                         if (this.draggedEntity) {
                             this.draggedEntity.isDragged = false;
                             this.draggedEntity = null;
@@ -829,6 +835,15 @@
                 const endHandler = (e) => {
                     if (this.activePointers.has(e.pointerId)) {
                         this.activePointers.delete(e.pointerId);
+                    }
+
+                    if (this.clickedEntity) {
+                        const clickedEntity = this.clickedEntity;
+                        this.clickedEntity = null;
+                        const moveDist = Math.hypot(e.clientX - this.pointerDownScreenX, e.clientY - this.pointerDownScreenY);
+                        if (e.type === 'pointerup' && moveDist < 14 && performance.now() - this.pointerDownTime < 450) {
+                            clickedEntity.onClick?.(this.pointerDownWorldPos);
+                        }
                     }
 
                     if (this.draggedEntity) {
@@ -993,8 +1008,10 @@
                     category: 'vehicle',
                     x: 440,
                     y: 3010,
-                    w: 520,
-                    h: 320,
+                    w: 572,
+                    h: 352,
+                    scale: 1.1,
+                    draggable: false,
                     draw: (ctx, ent) => this.drawIceCreamVan(ctx, ent),
                     drawForeground: (ctx, ent) => this.drawIceCreamVanForeground(ctx, ent)
                 });
@@ -1024,17 +1041,6 @@
                     this.toggleWindow();
                 };
 
-                van.onDragMove = function(dx, dy) {
-                    if (this.itemsInside) {
-                        this.itemsInside.forEach(item => {
-                            if (item.insideVan === this.id && !item.isDragged) {
-                                item.x += dx;
-                                item.y += dy;
-                            }
-                        });
-                    }
-                };
-
                 van.putInside = function(item) {
                     if (!this.itemsInside) this.itemsInside = [];
                     if (!this.itemsInside.includes(item)) {
@@ -1043,15 +1049,15 @@
                     item.insideVan = this.id;
 
                     if (item.type === 'person') {
-                        if (item.x > this.x + 60) {
+                        if (item.x > this.x + 60 * this.scale) {
                             // Driver cabin seat
-                            item.x = this.x + 160;
-                            item.y = this.y - 70;
+                            item.x = this.x + 160 * this.scale;
+                            item.y = this.y - 70 * this.scale;
                             item.facingLeft = false;
                         } else {
                             // Service vendor spot behind counter
-                            item.x = Math.max(this.x - 120, Math.min(this.x + 30, item.x));
-                            item.y = this.y - 95;
+                            item.x = Math.max(this.x - 120 * this.scale, Math.min(this.x + 30 * this.scale, item.x));
+                            item.y = this.y - 95 * this.scale;
                             item.facingLeft = true;
                         }
                         item.isSitting = false;
@@ -1060,8 +1066,8 @@
                         item.triggerReaction('happy', 80);
                     } else {
                         // Place item neatly on the counter shelf
-                        item.y = this.y - 105;
-                        item.x = Math.max(this.x - 145, Math.min(this.x + 65, item.x));
+                        item.y = this.y - 105 * this.scale;
+                        item.x = Math.max(this.x - 145 * this.scale, Math.min(this.x + 65 * this.scale, item.x));
                     }
 
                     item.vanOffsetX = item.x - this.x;
@@ -1085,36 +1091,46 @@
                 // Initial treats stocked neatly inside the truck counter
                 const cone1 = new Entity({ id: 'ic_cone1', name: 'Strawberry Cone', category: 'ice_cream', x: 340, y: 2905, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#f43f5e') });
                 cone1.insideVan = 'obj_van';
-                cone1.vanOffsetX = cone1.x - van.x;
-                cone1.vanOffsetY = cone1.y - van.y;
+                cone1.vanOffsetX = (cone1.x - van.x) * van.scale;
+                cone1.vanOffsetY = (cone1.y - van.y) * van.scale;
+                cone1.x = van.x + cone1.vanOffsetX;
+                cone1.y = van.y + cone1.vanOffsetY;
                 van.itemsInside.push(cone1);
                 this.add(cone1);
 
                 const cone2 = new Entity({ id: 'ic_cone2', name: 'Mint Cone', category: 'ice_cream', x: 380, y: 2905, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#10b981') });
                 cone2.insideVan = 'obj_van';
-                cone2.vanOffsetX = cone2.x - van.x;
-                cone2.vanOffsetY = cone2.y - van.y;
+                cone2.vanOffsetX = (cone2.x - van.x) * van.scale;
+                cone2.vanOffsetY = (cone2.y - van.y) * van.scale;
+                cone2.x = van.x + cone2.vanOffsetX;
+                cone2.y = van.y + cone2.vanOffsetY;
                 van.itemsInside.push(cone2);
                 this.add(cone2);
 
                 const cone3 = new Entity({ id: 'ic_cone3', name: 'Choco Cone', category: 'ice_cream', x: 420, y: 2905, w: 32, h: 48, draw: (ctx, ent) => this.drawCone(ctx, ent, '#78350f') });
                 cone3.insideVan = 'obj_van';
-                cone3.vanOffsetX = cone3.x - van.x;
-                cone3.vanOffsetY = cone3.y - van.y;
+                cone3.vanOffsetX = (cone3.x - van.x) * van.scale;
+                cone3.vanOffsetY = (cone3.y - van.y) * van.scale;
+                cone3.x = van.x + cone3.vanOffsetX;
+                cone3.y = van.y + cone3.vanOffsetY;
                 van.itemsInside.push(cone3);
                 this.add(cone3);
 
                 const sundae = new Entity({ id: 'ic_tub', name: 'Sundae Tub', category: 'ice_cream', x: 460, y: 2905, w: 36, h: 40, draw: (ctx, ent) => this.drawSundae(ctx, ent) });
                 sundae.insideVan = 'obj_van';
-                sundae.vanOffsetX = sundae.x - van.x;
-                sundae.vanOffsetY = sundae.y - van.y;
+                sundae.vanOffsetX = (sundae.x - van.x) * van.scale;
+                sundae.vanOffsetY = (sundae.y - van.y) * van.scale;
+                sundae.x = van.x + sundae.vanOffsetX;
+                sundae.y = van.y + sundae.vanOffsetY;
                 van.itemsInside.push(sundae);
                 this.add(sundae);
 
                 const pop = new Entity({ id: 'ic_pop', name: 'Rainbow Popsicle', category: 'ice_cream', x: 500, y: 2905, w: 28, h: 46, draw: (ctx, ent) => this.drawPopsicle(ctx, ent) });
                 pop.insideVan = 'obj_van';
-                pop.vanOffsetX = pop.x - van.x;
-                pop.vanOffsetY = pop.y - van.y;
+                pop.vanOffsetX = (pop.x - van.x) * van.scale;
+                pop.vanOffsetY = (pop.y - van.y) * van.scale;
+                pop.x = van.x + pop.vanOffsetX;
+                pop.y = van.y + pop.vanOffsetY;
                 van.itemsInside.push(pop);
                 this.add(pop);
 
@@ -1392,9 +1408,8 @@
             }
 
             drawIceCreamVan(ctx, ent) {
-                const idleBounce = Math.sin(Date.now() / 420) * 1.5;
                 ctx.save();
-                ctx.translate(0, idleBounce);
+                ctx.scale(ent.scale, ent.scale);
 
                 // 1. CHASSIS & WHEELS
                 // Ground contact shadow
@@ -1735,9 +1750,8 @@
             }
 
             drawIceCreamVanForeground(ctx, ent) {
-                const idleBounce = Math.sin(Date.now() / 420) * 1.5;
                 ctx.save();
-                ctx.translate(0, idleBounce);
+                ctx.scale(ent.scale, ent.scale);
 
                 // Window Bounds: x: -160 to +75 (w: 235), y: -220 to -95 (h: 125)
                 const openP = ent.windowOpenProgress !== undefined ? ent.windowOpenProgress : (ent.isWindowOpen ? 1.0 : 0.0);
