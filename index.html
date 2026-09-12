@@ -1,6 +1,3 @@
-Warning: truncated output (original token count: 35827)
-Total output lines: 2936
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -1204,7 +1201,344 @@ Total output lines: 2936
 
                 // 6. COZY BEDROOM
                 this.add(new Entity({ id: 'bed_main', name: 'Cozy Bed', category: 'chair', x: 2620, y: 1780, w: 160, h: 85, draw: (ctx, ent) => this.drawBed(ctx, ent) }));
-                this.add(new Entity({ id: 'bed_nightstand', name: 'Nightstand', category: 'table', x: 2800, y: 1780, w: 55, …5827 tokens truncated…o(245, -55);
+                this.add(new Entity({ id: 'bed_nightstand', name: 'Nightstand', category: 'table', x: 2800, y: 1780, w: 55, h: 65, draw: (ctx, ent) => this.drawNightstand(ctx, ent) }));
+                this.add(new Entity({ id: 'bed_lamp', name: 'Table Lamp', category: 'decor', x: 2800, y: 1715, w: 30, h: 45, draw: (ctx, ent) => this.drawLamp(ctx, ent) }));
+                this.add(new Entity({ id: 'bed_slippers', name: 'Bunny Slippers', category: 'decor', x: 2900, y: 1780, w: 40, h: 25, draw: (ctx, ent) => this.drawSlippers(ctx, ent) }));
+
+                // 7. LIBRARY NOOK
+                this.add(new Entity({ id: 'lib_chair', name: 'Armchair', category: 'chair', x: 3380, y: 1780, w: 80, h: 90, draw: (ctx, ent) => this.drawArmchair(ctx, ent, '#1e3a8a') }));
+                this.add(new Entity({ id: 'lib_table', name: 'Tea Table', category: 'table', x: 3520, y: 1780, w: 60, h: 55, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
+                this.add(new Entity({ id: 'lib_stack', name: 'Book Stack', category: 'decor', x: 3520, y: 1725, w: 40, h: 45, draw: (ctx, ent) => this.drawBookStack(ctx, ent) }));
+
+                // 8. LIVING ROOM
+                this.add(new Entity({ id: 'liv_sofa', name: 'Comfy Sofa', category: 'chair', x: 2600, y: 2380, w: 170, h: 85, draw: (ctx, ent) => this.drawSofa(ctx, ent) }));
+                this.add(new Entity({ id: 'liv_coffeetable', name: 'Coffee Table', category: 'table', x: 2820, y: 2380, w: 110, h: 50, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
+                this.add(new Entity({ id: 'liv_fern', name: 'Potted Fern', category: 'plant', x: 3000, y: 2380, w: 55, h: 80, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'fern') }));
+
+                // 9. MUSIC ROOM
+                this.add(new Entity({ id: 'mus_piano', name: 'Grand Piano', category: 'table', x: 3450, y: 2380, w: 140, h: 110, draw: (ctx, ent) => this.drawPiano(ctx, ent) }));
+                this.add(new Entity({ id: 'mus_bench', name: 'Piano Stool', category: 'chair', x: 3340, y: 2380, w: 45, h: 50, draw: (ctx, ent) => this.drawStool(ctx, ent, '#78350f') }));
+                this.add(new Entity({ id: 'mus_guitar', name: 'Acoustic Guitar', category: 'decor', x: 3660, y: 2380, w: 45, h: 90, draw: (ctx, ent) => this.drawGuitar(ctx, ent) }));
+                this.add(new Entity({ id: 'mus_drum', name: 'Bongo Drums', category: 'decor', x: 3750, y: 2380, w: 55, h: 50, draw: (ctx, ent) => this.drawDrums(ctx, ent) }));
+
+                // 10. GRAND HALLWAY & DINING
+                this.add(new Entity({ id: 'hall_bench', name: 'Hall Bench', category: 'chair', x: 2600, y: 3080, w: 110, h: 60, draw: (ctx, ent) => this.drawBench(ctx, ent, '#92400e') }));
+                this.add(new Entity({ id: 'hall_plant', name: 'Bay Tree', category: 'plant', x: 2880, y: 3080, w: 55, h: 110, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'tree') }));
+                this.add(new Entity({ id: 'din_table', name: 'Dining Table', category: 'table', x: 3450, y: 3080, w: 260, h: 100, draw: (ctx, ent) => this.drawTable(ctx, ent) }));
+                this.add(new Entity({ id: 'din_chair1', name: 'Chair Left', category: 'chair', x: 3300, y: 3080, w: 50, h: 80, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
+                this.add(new Entity({ id: 'din_chair2', name: 'Chair Right', category: 'chair', x: 3600, y: 3080, w: 50, h: 80, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
+                this.add(new Entity({ id: 'food_cake', name: 'Birthday Cake', category: 'food', x: 3400, y: 3000, w: 55, h: 50, draw: (ctx, ent) => this.drawCake(ctx, ent) }));
+                this.add(new Entity({ id: 'food_pizza', name: 'Pizza Tray', category: 'food', x: 3470, y: 3000, w: 50, h: 35, draw: (ctx, ent) => this.drawPizza(ctx, ent) }));
+                this.add(new Entity({ id: 'food_jug', name: 'Juice Pitcher', category: 'food', x: 3530, y: 3000, w: 35, h: 45, draw: (ctx, ent) => this.drawJug(ctx, ent) }));
+                this.add(new Entity({ id: 'food_apple', name: 'Fruit Bowl', category: 'food', x: 3150, y: 3080, w: 45, h: 40, draw: (ctx, ent) => this.drawFruitBowl(ctx, ent) }));
+                this.add(new Entity({ id: 'food_plates', name: 'Empty Plates', category: 'food', x: 3260, y: 3080, w: 70, h: 30, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
+                this.add(new Entity({ id: 'food_bread', name: 'Bread Basket', category: 'food', x: 3580, y: 3000, w: 55, h: 40, draw: (ctx, ent) => this.drawCroissants(ctx, ent) }));
+
+                // 11. ART LOFT (Floor 3 Right)
+                this.add(new Entity({ id: 'art_desk', name: 'Craft Table', category: 'table', x: 4100, y: 1180, w: 160, h: 75, draw: (ctx, ent) => this.drawTable(ctx, ent) }));
+                this.add(new Entity({ id: 'art_palette', name: 'Paint Palette', category: 'decor', x: 4050, y: 1105, w: 45, h: 35, draw: (ctx, ent) => this.drawPalette(ctx, ent) }));
+                this.add(new Entity({ id: 'art_easel', name: 'Painting Easel', category: 'decor', x: 4350, y: 1180, w: 75, h: 120, draw: (ctx, ent) => this.drawEasel(ctx, ent) }));
+                this.add(new Entity({ id: 'art_stool', name: 'Art Stool', category: 'chair', x: 4220, y: 1180, w: 45, h: 50, draw: (ctx, ent) => this.drawStool(ctx, ent, '#0284c7') }));
+
+                // 12. NURSERY & TOY ROOM
+                this.add(new Entity({ id: 'toy_dollhouse', name: 'Mini Dollhouse', category: 'toy', x: 4000, y: 1780, w: 70, h: 75, draw: (ctx, ent) => this.drawMiniDollhouse(ctx, ent) }));
+                this.add(new Entity({ id: 'toy_bear', name: 'Teddy Bear', category: 'toy', x: 4120, y: 1780, w: 45, h: 55, draw: (ctx, ent) => this.drawTeddy(ctx, ent) }));
+                this.add(new Entity({ id: 'toy_robot', name: 'Toy Robot', category: 'toy', x: 4250, y: 1780, w: 40, h: 55, draw: (ctx, ent) => this.drawRobot(ctx, ent) }));
+                this.add(new Entity({ id: 'toy_car', name: 'Red Toy Car', category: 'toy', x: 4350, y: 1780, w: 50, h: 35, draw: (ctx, ent) => this.drawToyCar(ctx, ent) }));
+                this.add(new Entity({ id: 'toy_blocks', name: 'Building Blocks', category: 'toy', x: 4450, y: 1780, w: 55, h: 40, draw: (ctx, ent) => this.drawBlocks(ctx, ent) }));
+
+                // 13. KITCHEN & PANTRY
+                this.add(new Entity({ id: 'kit_counter', name: 'Kitchen Counter', category: 'table', x: 4100, y: 2380, w: 200, h: 80, draw: (ctx, ent) => this.drawKitchenCounter(ctx, ent) }));
+                this.add(new Entity({ id: 'kit_pan', name: 'Frying Pan', category: 'food', x: 4040, y: 2300, w: 45, h: 25, draw: (ctx, ent) => this.drawPan(ctx, ent) }));
+                this.add(new Entity({ id: 'kit_kettle', name: 'Tea Kettle', category: 'decor', x: 4110, y: 2300, w: 35, h: 35, draw: (ctx, ent) => this.drawKettle(ctx, ent) }));
+                this.add(new Entity({ id: 'kit_cookie', name: 'Cookie Jar', category: 'food', x: 4170, y: 2300, w: 35, h: 40, draw: (ctx, ent) => this.drawCookieJar(ctx, ent) }));
+                this.add(new Entity({ id: 'kit_stool', name: 'Kitchen Stool', category: 'chair', x: 4320, y: 2380, w: 45, h: 55, draw: (ctx, ent) => this.drawStool(ctx, ent, '#10b981') }));
+
+                // Small, reusable pretend pantry. Tapping cycles a gentle prep state.
+                const pantryItem = (id, name, x, draw, w, h) => {
+                    const item = new Entity({ id, name, category: 'food', x, y: 2200, w, h, draw });
+                    item.prepStage = 0;
+                    item.onClick = function() { this.prepStage = (this.prepStage + 1) % 3; this.triggerReaction('happy', 32); };
+                    this.add(item);
+                };
+                pantryItem('kit_apple', 'Apple', 3970, (ctx, ent) => this.drawFruitBowl(ctx, ent), 45, 40);
+                pantryItem('kit_bread', 'Bread', 4050, (ctx, ent) => this.drawCroissants(ctx, ent), 52, 34);
+                pantryItem('kit_veggies', 'Vegetable Basket', 4140, (ctx, ent) => this.drawFruitBowl(ctx, ent), 55, 42);
+                pantryItem('kit_dough', 'Dough Bowl', 4230, (ctx, ent) => this.drawSundae(ctx, ent), 48, 42);
+
+                // 14. PLAY CAFE & BAKERY
+                this.add(new Entity({ id: 'cafe_counter', name: 'Bakery Display', category: 'table', x: 4100, y: 3080, w: 180, h: 85, draw: (ctx, ent) => this.drawBakeryCounter(ctx, ent) }));
+                this.add(new Entity({ id: 'cafe_donut', name: 'Donut Plate', category: 'food', x: 4050, y: 2995, w: 45, h: 30, draw: (ctx, ent) => this.drawDonuts(ctx, ent) }));
+                this.add(new Entity({ id: 'cafe_croissant', name: 'Croissants', category: 'food', x: 4120, y: 2995, w: 45, h: 30, draw: (ctx, ent) => this.drawCroissants(ctx, ent) }));
+                this.add(new Entity({ id: 'cafe_table', name: 'Cafe Table', category: 'table', x: 4400, y: 3080, w: 90, h: 70, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
+                this.add(new Entity({ id: 'cafe_chair1', name: 'Cafe Chair', category: 'chair', x: 4320, y: 3080, w: 45, h: 75, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
+                this.add(new Entity({ id: 'cafe_chair2', name: 'Cafe Chair Right', category: 'chair', x: 4480, y: 3080, w: 45, h: 75, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
+
+                // 15. SUNROOM & WORKSHOP
+                this.add(new Entity({ id: 'sun_chair', name: 'Wicker Chair', category: 'chair', x: 4950, y: 2380, w: 75, h: 80, draw: (ctx, ent) => this.drawArmchair(ctx, ent, '#d97706') }));
+                this.add(new Entity({ id: 'sun_plant', name: 'Monstera Plant', category: 'plant', x: 5200, y: 2380, w: 70, h: 100, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'monstera') }));
+                this.add(new Entity({ id: 'work_table', name: 'Workbench', category: 'table', x: 5000, y: 3080, w: 180, h: 80, draw: (ctx, ent) => this.drawWorkbench(ctx, ent) }));
+                this.add(new Entity({ id: 'work_boat', name: 'Wooden Boat', category: 'toy', x: 4960, y: 3000, w: 55, h: 40, draw: (ctx, ent) => this.drawToyBoat(ctx, ent) }));
+
+                // 16. GARDEN SHED & EAST GARDEN
+                this.add(new Entity({ id: 'gar_can', name: 'Watering Can', category: 'watering_can', x: 5550, y: 3080, w: 50, h: 45, draw: (ctx, ent) => this.drawWateringCan(ctx, ent) }));
+                this.add(new Entity({ id: 'gar_pot1', name: 'Sunflower Pot', category: 'plant', x: 5620, y: 3080, w: 45, h: 75, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'sunflower') }));
+                this.add(new Entity({ id: 'gar_pot2', name: 'Tulip Pot', category: 'plant', x: 5680, y: 3080, w: 40, h: 65, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'tulip') }));
+                this.add(new Entity({ id: 'gar_tools', name: 'Garden Trowel', category: 'decor', x: 5740, y: 3080, w: 35, h: 45, draw: (ctx, ent) => this.drawGardenTool(ctx, ent) }));
+                this.add(new Entity({ id: 'gar_bench', name: 'Garden Bench', category: 'chair', x: 6500, y: 3080, w: 140, h: 70, draw: (ctx, ent) => this.drawBench(ctx, ent, '#15803d') }));
+
+                // Phase 5 shared room polish: small, reversible reactions on existing props.
+                ['cl_mirror', 'bed_lamp', 'liv_sofa', 'mus_piano', 'mus_guitar', 'mus_drum', 'toy_bear', 'obs_telescope', 'gar_pot1', 'gar_pot2'].forEach(id => {
+                    const entity = this.entities.find(item => item.id === id);
+                    if (entity) entity.onClick = function() { this.triggerReaction('happy', 36); };
+                });
+                const emojiProp = (id, name, emoji, x, y, color) => {
+                    const prop = new Entity({ id, name, category: 'room_prop', x, y, w: 58, h: 58, draw: (ctx, ent) => { ctx.save(); ctx.fillStyle = color; ctx.beginPath(); ctx.arc(0, -ent.h / 2, ent.w / 2, 0, Math.PI * 2); ctx.fill(); ctx.font = '30px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(emoji, 0, -ent.h / 2); ctx.restore(); } });
+                    prop.onClick = function() { this.triggerReaction('happy', 30); };
+                    this.add(prop);
+                };
+                emojiProp('liv_cushions', 'Cushion Basket', '🛋️', 2470, 2380, '#fef3c7');
+                emojiProp('mus_shakers', 'Rhythm Shakers', '🎶', 3830, 2380, '#ccfbf1');
+                emojiProp('nur_mobile', 'Soft Mobile', '🌙', 4450, 1780, '#cffafe');
+                emojiProp('tower_clouds', 'Cloud Viewer', '☁️', 3000, 580, '#e0e7ff');
+                emojiProp('gar_basket', 'Harvest Basket', '🧺', 5850, 3080, '#dcfce7');
+
+                // Central lift core: a visible, gentle vertical connection for the building.
+                const liftFloors = [580, 1180, 1780, 2380, 3080];
+                const lift = new Entity({ id: 'obj_lift', name: 'Central Lift', category: 'transport', x: 3200, y: 3080, w: 150, h: 260, draggable: false,
+                    draw: (ctx, ent) => { ctx.save(); ctx.fillStyle = 'rgba(186,230,253,0.42)'; ctx.strokeStyle = '#0284c7'; ctx.lineWidth = 6; ctx.fillRect(-75, -2500, 150, 2500); ctx.strokeRect(-75, -2500, 150, 2500); const cabinY = ent.cabinY - ent.y; ctx.fillStyle = '#fef3c7'; ctx.fillRect(-58, cabinY - 90, 116, 90); ctx.strokeRect(-58, cabinY - 90, 116, 90); ctx.font = '30px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('🛗', 0, cabinY - 42); ctx.font = '16px sans-serif'; ctx.fillStyle = '#0f172a'; ctx.fillText(`Floor ${ent.floorIndex + 1}`, 0, cabinY - 102); ctx.restore(); }
+                });
+                lift.floorIndex = 4; lift.cabinY = liftFloors[4]; lift.targetY = lift.cabinY; lift.occupant = null;
+                lift.onClick = function() { if (Math.abs(this.cabinY - this.targetY) > 2) return; this.floorIndex = (this.floorIndex + 1) % liftFloors.length; this.targetY = liftFloors[this.floorIndex]; const nearby = window.entityManager?.entities.find(e => e.type === 'person' && Math.abs(e.x - this.x) < 180 && Math.abs(e.y - this.cabinY) < 150); if (nearby) { this.occupant = nearby; nearby.isSitting = false; nearby.state = 'idle'; } this.triggerReaction('happy', 40); };
+                lift.update = function() { const delta = this.targetY - this.cabinY; this.cabinY += Math.abs(delta) < 1 ? delta : delta * 0.08; if (this.occupant) { this.occupant.x = this.x; this.occupant.y = this.cabinY; } if (Math.abs(delta) < 1) this.occupant = null; Entity.prototype.update.call(this); };
+                this.add(lift);
+            }
+
+            drawPerson(ctx, ent) {
+                const d = ent.details;
+                const w = ent.w;
+                const h = ent.h;
+                const isSitting = ent.isSitting;
+                const isWalking = ent.state === 'walking';
+
+                ctx.save();
+                if (ent.facingLeft) {
+                    ctx.scale(-1, 1);
+                }
+
+                const walkYOffset = isWalking ? Math.abs(Math.sin(ent.walkCycle)) * -6 : 0;
+                const idleYOffset = (ent.state === 'idle') ? ent.idleBreathing : 0;
+                const totalY = walkYOffset + idleYOffset;
+
+                ctx.translate(0, totalY);
+
+                const bodyY = isSitting ? -h + 48 : -h + 38;
+                const bodyH = isSitting ? h - 60 : h - 50;
+
+                // Head
+                ctx.fillStyle = d.skin;
+                ctx.beginPath();
+                ctx.arc(0, -h + 20, 18, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Eyes with Blinking
+                ctx.fillStyle = '#0f172a';
+                if (ent.isBlinking) {
+                    ctx.strokeStyle = '#0f172a';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.moveTo(-9, -h + 18); ctx.lineTo(-3, -h + 18);
+                    ctx.moveTo(3, -h + 18); ctx.lineTo(9, -h + 18);
+                    ctx.stroke();
+                } else if (ent.reactionType === 'happy') {
+                    ctx.strokeStyle = '#0f172a';
+                    ctx.lineWidth = 2;
+                    ctx.beginPath();
+                    ctx.arc(-6, -h + 18, 3, Math.PI, 0);
+                    ctx.arc(6, -h + 18, 3, Math.PI, 0);
+                    ctx.stroke();
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(-6, -h + 18, 2.5, 0, Math.PI * 2);
+                    ctx.arc(6, -h + 18, 2.5, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Mouth
+                ctx.strokeStyle = '#0f172a';
+                ctx.lineWidth = 2;
+                ctx.beginPath();
+                if (ent.state === 'eating' || ent.reactionType === 'chewing') {
+                    const chewPhase = Math.floor(Date.now() / 90) % 2;
+                    ctx.arc(0, -h + 22, chewPhase === 0 ? 4 : 2, 0, Math.PI * 2);
+                } else {
+                    ctx.arc(0, -h + 20, 8, 0.1, Math.PI - 0.1);
+                }
+                ctx.stroke();
+
+                // Hair Styles
+                ctx.fillStyle = d.hair;
+                if (d.hairStyle === 'chic_bob') {
+                    ctx.beginPath();
+                    ctx.arc(0, -h + 16, 22, Math.PI * 0.8, Math.PI * 2.2);
+                    ctx.fill();
+                } else if (d.hairStyle === 'pigtails') {
+                    ctx.beginPath();
+                    ctx.arc(-18, -h + 16, 10, 0, Math.PI * 2);
+                    ctx.arc(18, -h + 16, 10, 0, Math.PI * 2);
+                    ctx.arc(0, -h + 14, 19, Math.PI, Math.PI * 2);
+                    ctx.fill();
+                } else if (d.hairStyle === 'glasses_grey') {
+                    ctx.beginPath();
+                    ctx.arc(0, -h + 14, 19, Math.PI, Math.PI * 2);
+                    ctx.fill();
+                    ctx.strokeStyle = '#0f172a';
+                    ctx.lineWidth = 2;
+                    ctx.strokeRect(-12, -h + 14, 10, 8);
+                    ctx.strokeRect(2, -h + 14, 10, 8);
+                } else if (d.hairStyle === 'chef_hat') {
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fillRect(-14, -h - 15, 28, 20);
+                    ctx.beginPath();
+                    ctx.arc(0, -h - 15, 20, 0, Math.PI * 2);
+                    ctx.fill();
+                } else {
+                    ctx.beginPath();
+                    ctx.arc(0, -h + 14, 20, Math.PI, Math.PI * 2);
+                    ctx.fill();
+                }
+
+                // Render Worn Hat
+                if (ent.wornItems.hat) {
+                    ctx.save();
+                    ctx.translate(0, -h + 12);
+                    ent.wornItems.hat.draw(ctx, ent.wornItems.hat);
+                    ctx.restore();
+                }
+
+                // Body Base / Shirt / Dress
+                if (ent.wornItems.dress) {
+                    ctx.save();
+                    ctx.translate(0, bodyY + 25);
+                    ent.wornItems.dress.draw(ctx, ent.wornItems.dress);
+                    ctx.restore();
+                } else {
+                    if (ent.wornItems.shirt) {
+                        ctx.save();
+                        ctx.translate(0, bodyY + 20);
+                        ent.wornItems.shirt.draw(ctx, ent.wornItems.shirt);
+                        ctx.restore();
+                    } else {
+                        ctx.fillStyle = d.outfit;
+                        ctx.beginPath();
+                        ctx.roundRect(-w / 2.5, bodyY, w / 1.25, bodyH, 8);
+                        ctx.fill();
+                    }
+
+                    if (ent.wornItems.pants) {
+                        ctx.save();
+                        ctx.translate(0, bodyY + bodyH - 10);
+                        ent.wornItems.pants.draw(ctx, ent.wornItems.pants);
+                        ctx.restore();
+                    }
+                }
+
+                // Legs with Walking Swing Animation
+                ctx.fillStyle = '#1e293b';
+                if (isSitting) {
+                    ctx.fillRect(-w / 3, -16, 20, 8);
+                    ctx.fillRect(-w / 3 + 12, -16, 8, 16);
+                } else if (isWalking) {
+                    const legAngle = Math.sin(ent.walkCycle) * 14;
+                    ctx.save();
+                    ctx.translate(-w / 4, -12);
+                    ctx.rotate((legAngle * Math.PI) / 180);
+                    ctx.fillRect(-4, 0, 8, 14);
+                    ctx.restore();
+
+                    ctx.save();
+                    ctx.translate(w / 4, -12);
+                    ctx.rotate((-legAngle * Math.PI) / 180);
+                    ctx.fillRect(-4, 0, 8, 14);
+                    ctx.restore();
+                } else {
+                    if (ent.wornItems.shoes) {
+                        ctx.save();
+                        ctx.translate(0, -2);
+                        ent.wornItems.shoes.draw(ctx, ent.wornItems.shoes);
+                        ctx.restore();
+                    } else {
+                        ctx.fillRect(-w / 3, -12, 12, 12);
+                        ctx.fillRect(w / 3 - 12, -12, 12, 12);
+                    }
+                }
+
+                // Render Held Food / Ice Cream during eating animation
+                if (ent.state === 'eating' && ent.heldFood) {
+                    ctx.save();
+                    ctx.translate(14, -h + 28);
+                    ctx.scale(ent.heldFood.scale, ent.heldFood.scale);
+                    ent.heldFood.draw(ctx, ent.heldFood);
+                    ctx.restore();
+                }
+
+                ctx.restore();
+            }
+
+            drawIceCreamVan(ctx, ent) {
+                ctx.save();
+                ctx.scale(ent.scale, ent.scale);
+
+                // 1. CHASSIS & WHEELS
+                // Ground contact shadow
+                ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
+                ctx.beginPath();
+                ctx.ellipse(0, -6, 235, 14, 0, 0, Math.PI * 2);
+                ctx.fill();
+
+                // Underbody frame
+                ctx.fillStyle = '#334155';
+                ctx.fillRect(-220, -58, 440, 16);
+
+                // Rear wheel (-145, -40) and Front wheel (+165, -40)
+                const drawWheel = (wx) => {
+                    // Outer rubber tire with tread notches
+                    ctx.fillStyle = '#1e293b';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 42, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Whitewall ring
+                    ctx.fillStyle = '#f8fafc';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 30, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Chrome hub rim
+                    ctx.fillStyle = '#cbd5e1';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 22, 0, Math.PI * 2);
+                    ctx.fill();
+
+                    // Center pink cap
+                    ctx.fillStyle = '#f43f5e';
+                    ctx.beginPath();
+                    ctx.arc(wx, -40, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                };
+
+                // 2. MAIN TRUCK BODY
+                // Silhouette: -245 to +245, y: -245 to -55
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(-245, -55);
+                ctx.lineTo(-245, -230);
+                ctx.quadraticCurveTo(-245, -245, -230, -245);
+                ctx.lineTo(100, -245);
+                ctx.quadraticCurveTo(115, -245, 125, -235);
+                ctx.lineTo(220, -145);
+                ctx.quadraticCurveTo(240, -135, 245, -115);
+                ctx.lineTo(245, -55);
                 ctx.closePath();
                 ctx.clip();
 
@@ -2599,4 +2933,3 @@ Total output lines: 2936
     </script>
 </body>
 </html>
-
