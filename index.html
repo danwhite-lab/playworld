@@ -2490,6 +2490,7 @@
                 this.drawEastGardenZone(ctx);
                 this.drawBuildingStructure(ctx);
                 this.drawCirculationStairs(ctx);
+                this.drawLiftBayMask(ctx);
                 this.drawRoofsAndBalconies(ctx);
 
                 this.entityManager.updateAll();
@@ -2608,6 +2609,15 @@
                 // Open a clean central bay between the two building wings for the lift.
                 ctx.fillStyle = '#f8fafc'; ctx.fillRect(3130, 100, 140, 3000);
                 ctx.fillStyle = wallColor; ctx.fillRect(3122, 100, 12, 3000); ctx.fillRect(3266, 100, 12, 3000);
+            }
+
+            drawLiftBayMask(ctx) {
+                // Opaque center bay hides room walls/stairs behind the lift.
+                ctx.fillStyle = '#f8fafc';
+                ctx.fillRect(3130, 100, 140, 3000);
+                ctx.fillStyle = '#334155';
+                ctx.fillRect(3122, 100, 12, 3000);
+                ctx.fillRect(3266, 100, 12, 3000);
             }
 
             drawRoomInteriorDetails(ctx, r) {
