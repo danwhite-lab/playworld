@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 33976)
-Total output lines: 2878
+Warning: truncated output (original token count: 34908)
+Total output lines: 2908
 
 <!DOCTYPE html>
 <html lang="en">
@@ -162,6 +162,15 @@ Total output lines: 2878
     <div class="fixed bottom-3 left-3 z-10 hud-glass rounded-2xl px-3 py-2 flex items-center gap-2 text-slate-700 text-xs" aria-label="Sound settings">
         <label for="master-volume" class="font-semibold">🔊</label>
         <input id="master-volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Master volume" class="w-20 accent-sky-600">
+    </div>
+    <button id="open-art-pad" aria-label="Open art pad" class="fixed bottom-3 right-3 z-10 hud-glass rounded-2xl px-3 py-2 text-lg">🎨</button>
+
+    <div id="art-pad" class="fixed inset-0 z-40 hidden items-center justify-center bg-slate-950/50 p-4" role="dialog" aria-label="Art pad">
+        <div class="hud-glass w-full max-w-xl rounded-3xl p-4">
+            <div class="flex items-center justify-between mb-3"><h2 class="font-bold text-slate-800">Art Loft</h2><button id="close-art-pad" aria-label="Close art pad" class="text-xl">✕</button></div>
+            <canvas id="art-canvas" width="760" height="460" aria-label="Drawing canvas" class="w-full rounded-2xl bg-white border-2 border-fuchsia-200 touch-none"></canvas>
+            <div class="flex flex-wrap items-center gap-2 mt-3"><label for="art-color" class="text-sm font-semibold">Color</label><input id="art-color" type="color" value="#f43f5e" aria-label="Paint color"><label for="art-size" class="text-sm font-semibold ml-2">Brush</label><input id="art-size" type="range" min="3" max="32" value="10" aria-label="Brush size"><button id="art-undo" class="px-3 py-1 rounded-xl bg-slate-200">Undo</button><button id="art-clear" class="px-3 py-1 rounded-xl bg-slate-200">Clear</button></div>
+        </div>
     </div>
 
     <!-- Landscape Mode Orientation Prompt Overlay (Visual Only, No Written Text/Headings) -->
@@ -1195,84 +1204,7 @@ Total output lines: 2878
                 // 6. COZY BEDROOM
                 this.add(new Entity({ id: 'bed_main', name: 'Cozy Bed', category: 'chair', x: 2620, y: 1780, w: 160, h: 85, draw: (ctx, ent) => this.drawBed(ctx, ent) }));
                 this.add(new Entity({ id: 'bed_nightstand', name: 'Nightstand', category: 'table', x: 2800, y: 1780, w: 55, h: 65, draw: (ctx, ent) => this.drawNightstand(ctx, ent) }));
-                this.add(new Entity({ id: 'bed_lamp', name: 'Table Lamp', category: 'decor', x: 2800, y: 1715, w: 30, h: 45, draw: (ctx, ent) => this.drawLamp(ctx, ent) }));
-                this.add(new Entity({ id: 'bed_slippers', name: 'Bunny Slippers', category: 'decor', x: 2900, y: 1780, w: 40, h: 25, draw: (ctx, ent) => this.drawSlippers(ctx, ent) }));
-
-                // 7. LIBRARY NOOK
-                this.add(new Entity({ id: 'lib_chair', name: 'Armchair', category: 'chair', x: 3380, y: 1780, w: 80, h: 90, draw: (ctx, ent) => this.drawArmchair(ctx, ent, '#1e3a8a') }));
-                this.add(new Entity({ id: 'lib_table', name: 'Tea Table', category: 'table', x: 3520, y: 1780, w: 60, h: 55, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
-                this.add(new Entity({ id: 'lib_stack', name: 'Book Stack', category: 'decor', x: 3520, y: 1725, w: 40, h: 45, draw: (ctx, ent) => this.drawBookStack(ctx, ent) }));
-
-                // 8. LIVING ROOM
-                this.add(new Entity({ id: 'liv_sofa', name: 'Comfy Sofa', category: 'chair', x: 2600, y: 2380, w: 170, h: 85, draw: (ctx, ent) => this.drawSofa(ctx, ent) }));
-                this.add(new Entity({ id: 'liv_coffeetable', name: 'Coffee Table', category: 'table', x: 2820, y: 2380, w: 110, h: 50, draw: (ctx, ent) => this.drawSm…3976 tokens truncated… } else {
-                        ctx.fillRect(-w / 3, -12, 12, 12);
-                        ctx.fillRect(w / 3 - 12, -12, 12, 12);
-                    }
-                }
-
-                // Render Held Food / Ice Cream during eating animation
-                if (ent.state === 'eating' && ent.heldFood) {
-                    ctx.save();
-                    ctx.translate(14, -h + 28);
-                    ctx.scale(ent.heldFood.scale, ent.heldFood.scale);
-                    ent.heldFood.draw(ctx, ent.heldFood);
-                    ctx.restore();
-                }
-
-                ctx.restore();
-            }
-
-            drawIceCreamVan(ctx, ent) {
-                ctx.save();
-                ctx.scale(ent.scale, ent.scale);
-
-                // 1. CHASSIS & WHEELS
-                // Ground contact shadow
-                ctx.fillStyle = 'rgba(15, 23, 42, 0.22)';
-                ctx.beginPath();
-                ctx.ellipse(0, -6, 235, 14, 0, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Underbody frame
-                ctx.fillStyle = '#334155';
-                ctx.fillRect(-220, -58, 440, 16);
-
-                // Rear wheel (-145, -40) and Front wheel (+165, -40)
-                const drawWheel = (wx) => {
-                    // Outer rubber tire with tread notches
-                    ctx.fillStyle = '#1e293b';
-                    ctx.beginPath();
-                    ctx.arc(wx, -40, 42, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Whitewall ring
-                    ctx.fillStyle = '#f8fafc';
-                    ctx.beginPath();
-                    ctx.arc(wx, -40, 30, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Chrome hub rim
-                    ctx.fillStyle = '#cbd5e1';
-                    ctx.beginPath();
-                    ctx.arc(wx, -40, 22, 0, Math.PI * 2);
-                    ctx.fill();
-
-                    // Center pink cap
-                    ctx.fillStyle = '#f43f5e';
-                    ctx.beginPath();
-                    ctx.arc(wx, -40, 10, 0, Math.PI * 2);
-                    ctx.fill();
-                };
-
-                // 2. MAIN TRUCK BODY
-                // Silhouette: -245 to +245, y: -245 to -55
-                ctx.save();
-                ctx.beginPath();
-                ctx.moveTo(-245, -55);
-                ctx.lineTo(-245, -230);
-                ctx.quadraticCurveTo(-245, -245, -230, -245);
-                ctx.lineTo(100, -245);
+                this.add(new Entity({ id:…4908 tokens truncated… ctx.lineTo(100, -245);
                 ctx.quadraticCurveTo(115, -245, 125, -235);
                 ctx.lineTo(220, -145);
                 ctx.quadraticCurveTo(240, -135, 245, -115);
@@ -2514,6 +2446,27 @@ Total output lines: 2878
                 document.querySelectorAll('audio, video').forEach(media => { media.volume = level; });
                 localStorage.setItem('playworld-volume', String(level));
             });
+
+            // Optional Art Loft drawing pad; isolated from the world canvas.
+            const artPad = document.getElementById('art-pad');
+            const artCanvas = document.getElementById('art-canvas');
+            const artCtx = artCanvas.getContext('2d');
+            const artHistory = [];
+            let artDrawing = false;
+            const saveArt = () => { if (artHistory.length > 12) artHistory.shift(); artHistory.push(artCtx.getImageData(0, 0, artCanvas.width, artCanvas.height)); localStorage.setItem('playworld-art', artCanvas.toDataURL()); };
+            const artPoint = e => { const r = artCanvas.getBoundingClientRect(); return { x: (e.clientX - r.left) * artCanvas.width / r.width, y: (e.clientY - r.top) * artCanvas.height / r.height }; };
+            artCanvas.addEventListener('pointerdown', e => { artDrawing = true; artCanvas.setPointerCapture(e.pointerId); const p = artPoint(e); artCtx.beginPath(); artCtx.moveTo(p.x, p.y); });
+            artCanvas.addEventListener('pointermove', e => { if (!artDrawing) return; const p = artPoint(e); artCtx.lineTo(p.x, p.y); artCtx.stroke(); });
+            ['pointerup', 'pointercancel'].forEach(type => artCanvas.addEventListener(type, () => { if (artDrawing) saveArt(); artDrawing = false; }));
+            document.getElementById('art-color').addEventListener('input', e => { artCtx.strokeStyle = e.target.value; });
+            document.getElementById('art-size').addEventListener('input', e => { artCtx.lineWidth = Number(e.target.value); });
+            document.getElementById('art-clear').addEventListener('click', () => { saveArt(); artCtx.clearRect(0, 0, artCanvas.width, artCanvas.height); });
+            document.getElementById('art-undo').addEventListener('click', () => { const last = artHistory.pop(); if (last) artCtx.putImageData(last, 0, 0); });
+            document.getElementById('open-art-pad').addEventListener('click', () => { artPad.classList.remove('hidden'); artPad.classList.add('flex'); artCanvas.focus(); });
+            document.getElementById('close-art-pad').addEventListener('click', () => { artPad.classList.add('hidden'); artPad.classList.remove('flex'); });
+            artCtx.strokeStyle = '#f43f5e'; artCtx.lineWidth = 10; artCtx.lineCap = 'round';
+            const savedArt = localStorage.getItem('playworld-art');
+            if (savedArt) { const img = new Image(); img.onload = () => artCtx.drawImage(img, 0, 0); img.src = savedArt; }
             canvas.addEventListener('keydown', (event) => {
                 const step = 120;
                 if (event.key === 'ArrowLeft') { camera.x -= step; event.preventDefault(); }
