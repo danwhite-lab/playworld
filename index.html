@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 33325)
-Total output lines: 2848
+Warning: truncated output (original token count: 33652)
+Total output lines: 2864
 
 <!DOCTYPE html>
 <html lang="en">
@@ -1153,6 +1153,22 @@ Total output lines: 2848
                 this.add(new Entity({ id: 'str_bench', name: 'Park Bench', category: 'chair', x: 920, y: 3010, w: 120, h: 65, draw: (ctx, ent) => this.drawBench(ctx, ent) }));
                 this.add(new Entity({ id: 'str_hydrant', name: 'Fire Hydrant', category: 'decor', x: 100, y: 3010, w: 34, h: 55, draw: (ctx, ent) => this.drawHydrant(ctx, ent) }));
 
+                // Street hub props: quiet, optional prompts for neighborhood pretend play.
+                const streetEmoji = (emoji, color = '#f8fafc') => (ctx, ent) => {
+                    ctx.save(); ctx.fillStyle = color; ctx.beginPath(); ctx.roundRect(-ent.w / 2, -ent.h, ent.w, ent.h, 14); ctx.fill();
+                    ctx.font = `${Math.round(ent.h * 0.62)}px sans-serif`; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(emoji, 0, -ent.h / 2); ctx.restore();
+                };
+                const streetProp = (id, name, emoji, x, w = 60, h = 70, color) => {
+                    const prop = new Entity({ id, name, category: 'street', x, y: 3010, w, h, draw: streetEmoji(emoji, color) });
+                    prop.onClick = function() { this.triggerReaction('happy', 36); };
+                    this.add(prop);
+                };
+                streetProp('str_bus_stop', 'Bus Stop', '🚏', 1040, 64, 84, '#e0f2fe');
+                streetProp('str_bicycle', 'Bicycle', '🚲', 1140, 72, 58, '#dcfce7');
+                streetProp('str_pet', 'Friendly Dog', '🐶', 1240, 64, 58, '#fef3c7');
+                streetProp('str_mailbox', 'Mailbox', '📬', 1340, 58, 72, '#dbeafe');
+                streetProp('str_market', 'Small Market', '🧺', 1480, 78, 78, '#fce7f3');
+
                 // 3. LAUNDRY NOOK (Ground Floor Left)
                 this.add(new Entity({ id: 'laun_basket', name: 'Laundry Basket', category: 'decor', x: 1200, y: 3080, w: 55, h: 45, draw: (ctx, ent) => this.drawLaundryBasket(ctx, ent) }));
                 this.add(new Entity({ id: 'laun_detergent', name: 'Soap Powder', category: 'decor', x: 1300, y: 3080, w: 35, h: 40, draw: (ctx, ent) => this.drawDetergent(ctx, ent) }));
@@ -1189,18 +1205,7 @@ Total output lines: 2848
 
                 // 8. LIVING ROOM
                 this.add(new Entity({ id: 'liv_sofa', name: 'Comfy Sofa', category: 'chair', x: 2600, y: 2380, w: 170, h: 85, draw: (ctx, ent) => this.drawSofa(ctx, ent) }));
-                this.add(new Entity({ id: 'liv_coffeetable', name: 'Coffee Table', category: 'table', x: 2820, y: 2380, w: 110, h: 50, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
-                this.add(new Entity({ id: 'liv_fern', name: 'Potted Fern', category: 'plant', x: 3000, y: 2380, w: 55, h: 80, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'fern') }));
-
-                // 9. MUSIC ROOM
-                this.add(new Entity({ id: 'mus_piano', name: 'Grand Piano', category: 'table', x: 3450, y: 2380, w: 140, h: 110, draw: (ctx, ent) => this.drawPiano(ctx, ent) }));
-                this.add(new Entity({ id: 'mus_bench', name: 'Piano Stool', category: 'chair', x: 3340, y: 2380, w: 45, h: 50, draw: (ctx, ent) => this.drawStool(ctx, ent, '#78350f') }));
-                this.add(new Entity({ id: 'mus_guitar', name: 'Acoustic Guitar', category: 'decor', x: 3660, y: 2380, w: 45, h: 90, draw: (ctx, ent) => this.drawGuitar(ctx, ent) }));
-                this.add(new Entity({ id: 'mus_drum', name: 'Bongo Drums', category: 'decor', x: 3750, y: 2380, w: 55, h: 50, draw: (ctx, ent) => this.drawDrums(ctx, ent) }));
-
-                // 10. GRAND HALLWAY & DINING
-                this.add(new Entity({ id: 'hall_bench', name: 'Hall Bench', category: 'chair', x: 2600, y: 3080, w: 110, h: 60, draw: (ctx, ent) => this.drawBench(ctx, ent, '#92400e') }));
-                this.add(new Entity({ id: 'hall_plant', name: 'Bay Tree', category: 'plant', x: 2880, …3325 tokens truncated… } else {
+                this.add(new Entity({ id: 'liv_coffeetable', name: 'Coffee Table', category: 'table', x: 2820, y: 2380, w: 110, h: 50, draw: (ctx, ent) => this.drawSm…3652 tokens truncated… } else {
                         ctx.fillRect(-w / 3, -12, 12, 12);
                         ctx.fillRect(w / 3 - 12, -12, 12, 12);
                     }
