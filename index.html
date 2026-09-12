@@ -228,9 +228,9 @@
                 this.friction = 0.92;
 
                 // Stable presentation scale: room buttons pan, but never zoom.
-                this.zoom = 0.85;
-                this.minZoom = 0.85;
-                this.maxZoom = 0.85;
+                this.zoom = 1.05;
+                this.minZoom = 1.05;
+                this.maxZoom = 1.05;
 
                 this.isDragging = false;
                 this.lastPointerX = 0;
@@ -1008,7 +1008,7 @@
                 ];
 
                 peopleData.forEach(p => {
-                    const charScale = 1.4;
+                    const charScale = 2.6;
                     const charH = (p.height === 'adult' ? 120 : (p.height === 'child' ? 90 : 70)) * charScale;
                     const charW = (p.height === 'adult' ? 55 : (p.height === 'child' ? 45 : 40)) * charScale;
 
@@ -1314,9 +1314,10 @@
                 lift.onClick = function() { if (Math.abs(this.cabinY - this.targetY) > 2) return; this.floorIndex = (this.floorIndex + 1) % liftFloors.length; this.targetY = liftFloors[this.floorIndex]; const nearby = window.entityManager?.entities.find(e => e.type === 'person' && Math.abs(e.x - this.x) < 180 && Math.abs(e.y - this.cabinY) < 150); if (nearby) { this.occupant = nearby; nearby.isSitting = false; nearby.state = 'idle'; } this.triggerReaction('happy', 40); };
                 lift.update = function() { const delta = this.targetY - this.cabinY; this.cabinY += Math.abs(delta) < 1 ? delta : delta * 0.08; if (this.occupant) { this.occupant.x = this.x; this.occupant.y = this.cabinY; } if (Math.abs(delta) < 1) this.occupant = null; Entity.prototype.update.call(this); };
                 this.add(lift);
+                this.entities.forEach(item => { if (item.type !== 'person' && item.id !== 'obj_van' && item.id !== 'obj_lift') item.presentationScale = 1.35; });
                 ['kit_counter', 'din_table', 'art_desk', 'obs_telescope', 'liv_sofa', 'mus_piano', 'gar_bench'].forEach(id => {
                     const item = this.entities.find(entity => entity.id === id);
-                    if (item) item.presentationScale = 1.18;
+                    if (item) item.presentationScale = 1.85;
                 });
             }
 
