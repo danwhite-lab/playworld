@@ -1,4 +1,5 @@
-const CACHE_NAME = 'dollhouse-v1';
+// Bump this whenever the shell changes so deployed clients do not stay on an old build.
+const CACHE_NAME = 'dollhouse-v2';
 const PRECACHE_ASSETS = [
   '/',
   '/index.html',
@@ -64,3 +65,4 @@ self.addEventListener('fetch', event => {
     })
   );
 });
+
