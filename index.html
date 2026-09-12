@@ -1,5 +1,5 @@
-Warning: truncated output (original token count: 35283)
-Total output lines: 2924
+Warning: truncated output (original token count: 35361)
+Total output lines: 2926
 
 <!DOCTYPE html>
 <html lang="en">
@@ -52,6 +52,7 @@ Total output lines: 2924
         }
 
         #world-canvas:focus-visible { outline: 3px solid #0284c7; outline-offset: -3px; }
+        button:focus-visible, input:focus-visible { outline: 3px solid #0284c7; outline-offset: 2px; }
 
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
@@ -1203,12 +1204,7 @@ Total output lines: 2924
 
                 // 6. COZY BEDROOM
                 this.add(new Entity({ id: 'bed_main', name: 'Cozy Bed', category: 'chair', x: 2620, y: 1780, w: 160, h: 85, draw: (ctx, ent) => this.drawBed(ctx, ent) }));
-                this.add(new Entity({ id: 'bed_nightstand', name: 'Nightstand', category: 'table', x: 2800, y: 1780, w: 55, h: 65, draw: (ctx, ent) => this.drawNightstand(ctx, ent) }));
-                this.add(new Entity({ id:…5283 tokens truncated… ctx.lineTo(100, -245);
-                ctx.quadraticCurveTo(115, -245, 125, -235);
-                ctx.lineTo(220, -145);
-                ctx.quadraticCurveTo(240, -135, 245, -115);
-                ctx.lineTo(245, -55);
+                this.add(new Entity({ id: 'bed_nightstand', name: 'Nightstand', category: 'table', x: 2800, y: 1780, w: 55, …5361 tokens truncated…o(245, -55);
                 ctx.closePath();
                 ctx.clip();
 
@@ -2464,6 +2460,7 @@ Total output lines: 2924
             document.getElementById('art-undo').addEventListener('click', () => { const last = artHistory.pop(); if (last) artCtx.putImageData(last, 0, 0); });
             document.getElementById('open-art-pad').addEventListener('click', () => { artPad.classList.remove('hidden'); artPad.classList.add('flex'); artCanvas.focus(); });
             document.getElementById('close-art-pad').addEventListener('click', () => { artPad.classList.add('hidden'); artPad.classList.remove('flex'); });
+            artPad.addEventListener('keydown', event => { if (event.key === 'Escape') { artPad.classList.add('hidden'); artPad.classList.remove('flex'); document.getElementById('open-art-pad').focus(); } });
             artCtx.strokeStyle = '#f43f5e'; artCtx.lineWidth = 10; artCtx.lineCap = 'round';
             const savedArt = localStorage.getItem('playworld-art');
             if (savedArt) { const img = new Image(); img.onload = () => artCtx.drawImage(img, 0, 0); img.src = savedArt; }
