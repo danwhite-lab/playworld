@@ -2605,7 +2605,10 @@
                     ctx.fillStyle = slabColor;
                     ctx.fillRect(r.x, r.y + r.h - 16, r.w, 16);
                 });
-                // Open a clean central bay between the two building wings for the lift.\n                ctx.fillStyle = '#f8fafc'; ctx.fillRect(3130, 100, 140, 3000);\n                ctx.fillStyle = wallColor; ctx.fillRect(3122, 100, 12, 3000); ctx.fillRect(3266, 100, 12, 3000);\n            }
+                // Open a clean central bay between the two building wings for the lift.
+                ctx.fillStyle = '#f8fafc'; ctx.fillRect(3130, 100, 140, 3000);
+                ctx.fillStyle = wallColor; ctx.fillRect(3122, 100, 12, 3000); ctx.fillRect(3266, 100, 12, 3000);
+            }
 
             drawRoomInteriorDetails(ctx, r) {
                 ctx.save();
