@@ -1,3 +1,6 @@
+Warning: truncated output (original token count: 33325)
+Total output lines: 2848
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,6 +48,13 @@
             width: 100vw;
             height: 100vh;
             cursor: grab;
+            outline: none;
+        }
+
+        #world-canvas:focus-visible { outline: 3px solid #0284c7; outline-offset: -3px; }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
         }
 
         #world-canvas.grabbing {
@@ -104,7 +114,7 @@
 </head>
 <body class="relative w-full h-full overflow-hidden bg-sky-100 select-none">
 
-    <canvas id="world-canvas"></canvas>
+    <canvas id="world-canvas" role="application" tabindex="0" aria-label="Playworld interactive map. Use the room buttons to navigate, or arrow keys to pan."></canvas>
 
     <!-- Top Navigation Jump Bar -->
     <div class="fixed top-3 left-3 right-3 sm:left-auto sm:right-4 z-10 flex items-center justify-between sm:justify-end gap-2 pointer-events-none">
@@ -147,6 +157,11 @@
                 <span>📲</span>
             </button>
         </div>
+    </div>
+
+    <div class="fixed bottom-3 left-3 z-10 hud-glass rounded-2xl px-3 py-2 flex items-center gap-2 text-slate-700 text-xs" aria-label="Sound settings">
+        <label for="master-volume" class="font-semibold">🔊</label>
+        <input id="master-volume" type="range" min="0" max="1" step="0.05" value="1" aria-label="Master volume" class="w-20 accent-sky-600">
     </div>
 
     <!-- Landscape Mode Orientation Prompt Overlay (Visual Only, No Written Text/Headings) -->
@@ -1185,211 +1200,7 @@
 
                 // 10. GRAND HALLWAY & DINING
                 this.add(new Entity({ id: 'hall_bench', name: 'Hall Bench', category: 'chair', x: 2600, y: 3080, w: 110, h: 60, draw: (ctx, ent) => this.drawBench(ctx, ent, '#92400e') }));
-                this.add(new Entity({ id: 'hall_plant', name: 'Bay Tree', category: 'plant', x: 2880, y: 3080, w: 55, h: 110, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'tree') }));
-                this.add(new Entity({ id: 'din_table', name: 'Dining Table', category: 'table', x: 3450, y: 3080, w: 260, h: 100, draw: (ctx, ent) => this.drawTable(ctx, ent) }));
-                this.add(new Entity({ id: 'din_chair1', name: 'Chair Left', category: 'chair', x: 3300, y: 3080, w: 50, h: 80, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
-                this.add(new Entity({ id: 'din_chair2', name: 'Chair Right', category: 'chair', x: 3600, y: 3080, w: 50, h: 80, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
-                this.add(new Entity({ id: 'food_cake', name: 'Birthday Cake', category: 'food', x: 3400, y: 3000, w: 55, h: 50, draw: (ctx, ent) => this.drawCake(ctx, ent) }));
-                this.add(new Entity({ id: 'food_pizza', name: 'Pizza Tray', category: 'food', x: 3470, y: 3000, w: 50, h: 35, draw: (ctx, ent) => this.drawPizza(ctx, ent) }));
-                this.add(new Entity({ id: 'food_jug', name: 'Juice Pitcher', category: 'food', x: 3530, y: 3000, w: 35, h: 45, draw: (ctx, ent) => this.drawJug(ctx, ent) }));
-                this.add(new Entity({ id: 'food_apple', name: 'Fruit Bowl', category: 'food', x: 3150, y: 3080, w: 45, h: 40, draw: (ctx, ent) => this.drawFruitBowl(ctx, ent) }));
-
-                // 11. ART LOFT (Floor 3 Right)
-                this.add(new Entity({ id: 'art_desk', name: 'Craft Table', category: 'table', x: 4100, y: 1180, w: 160, h: 75, draw: (ctx, ent) => this.drawTable(ctx, ent) }));
-                this.add(new Entity({ id: 'art_palette', name: 'Paint Palette', category: 'decor', x: 4050, y: 1105, w: 45, h: 35, draw: (ctx, ent) => this.drawPalette(ctx, ent) }));
-                this.add(new Entity({ id: 'art_easel', name: 'Painting Easel', category: 'decor', x: 4350, y: 1180, w: 75, h: 120, draw: (ctx, ent) => this.drawEasel(ctx, ent) }));
-                this.add(new Entity({ id: 'art_stool', name: 'Art Stool', category: 'chair', x: 4220, y: 1180, w: 45, h: 50, draw: (ctx, ent) => this.drawStool(ctx, ent, '#0284c7') }));
-
-                // 12. NURSERY & TOY ROOM
-                this.add(new Entity({ id: 'toy_dollhouse', name: 'Mini Dollhouse', category: 'toy', x: 4000, y: 1780, w: 70, h: 75, draw: (ctx, ent) => this.drawMiniDollhouse(ctx, ent) }));
-                this.add(new Entity({ id: 'toy_bear', name: 'Teddy Bear', category: 'toy', x: 4120, y: 1780, w: 45, h: 55, draw: (ctx, ent) => this.drawTeddy(ctx, ent) }));
-                this.add(new Entity({ id: 'toy_robot', name: 'Toy Robot', category: 'toy', x: 4250, y: 1780, w: 40, h: 55, draw: (ctx, ent) => this.drawRobot(ctx, ent) }));
-                this.add(new Entity({ id: 'toy_car', name: 'Red Toy Car', category: 'toy', x: 4350, y: 1780, w: 50, h: 35, draw: (ctx, ent) => this.drawToyCar(ctx, ent) }));
-                this.add(new Entity({ id: 'toy_blocks', name: 'Building Blocks', category: 'toy', x: 4450, y: 1780, w: 55, h: 40, draw: (ctx, ent) => this.drawBlocks(ctx, ent) }));
-
-                // 13. KITCHEN & PANTRY
-                this.add(new Entity({ id: 'kit_counter', name: 'Kitchen Counter', category: 'table', x: 4100, y: 2380, w: 200, h: 80, draw: (ctx, ent) => this.drawKitchenCounter(ctx, ent) }));
-                this.add(new Entity({ id: 'kit_pan', name: 'Frying Pan', category: 'food', x: 4040, y: 2300, w: 45, h: 25, draw: (ctx, ent) => this.drawPan(ctx, ent) }));
-                this.add(new Entity({ id: 'kit_kettle', name: 'Tea Kettle', category: 'decor', x: 4110, y: 2300, w: 35, h: 35, draw: (ctx, ent) => this.drawKettle(ctx, ent) }));
-                this.add(new Entity({ id: 'kit_cookie', name: 'Cookie Jar', category: 'food', x: 4170, y: 2300, w: 35, h: 40, draw: (ctx, ent) => this.drawCookieJar(ctx, ent) }));
-                this.add(new Entity({ id: 'kit_stool', name: 'Kitchen Stool', category: 'chair', x: 4320, y: 2380, w: 45, h: 55, draw: (ctx, ent) => this.drawStool(ctx, ent, '#10b981') }));
-
-                // 14. PLAY CAFE & BAKERY
-                this.add(new Entity({ id: 'cafe_counter', name: 'Bakery Display', category: 'table', x: 4100, y: 3080, w: 180, h: 85, draw: (ctx, ent) => this.drawBakeryCounter(ctx, ent) }));
-                this.add(new Entity({ id: 'cafe_donut', name: 'Donut Plate', category: 'food', x: 4050, y: 2995, w: 45, h: 30, draw: (ctx, ent) => this.drawDonuts(ctx, ent) }));
-                this.add(new Entity({ id: 'cafe_croissant', name: 'Croissants', category: 'food', x: 4120, y: 2995, w: 45, h: 30, draw: (ctx, ent) => this.drawCroissants(ctx, ent) }));
-                this.add(new Entity({ id: 'cafe_table', name: 'Cafe Table', category: 'table', x: 4400, y: 3080, w: 90, h: 70, draw: (ctx, ent) => this.drawSmallTable(ctx, ent) }));
-                this.add(new Entity({ id: 'cafe_chair1', name: 'Cafe Chair', category: 'chair', x: 4320, y: 3080, w: 45, h: 75, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
-                this.add(new Entity({ id: 'cafe_chair2', name: 'Cafe Chair Right', category: 'chair', x: 4480, y: 3080, w: 45, h: 75, draw: (ctx, ent) => this.drawChair(ctx, ent) }));
-
-                // 15. SUNROOM & WORKSHOP
-                this.add(new Entity({ id: 'sun_chair', name: 'Wicker Chair', category: 'chair', x: 4950, y: 2380, w: 75, h: 80, draw: (ctx, ent) => this.drawArmchair(ctx, ent, '#d97706') }));
-                this.add(new Entity({ id: 'sun_plant', name: 'Monstera Plant', category: 'plant', x: 5200, y: 2380, w: 70, h: 100, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'monstera') }));
-                this.add(new Entity({ id: 'work_table', name: 'Workbench', category: 'table', x: 5000, y: 3080, w: 180, h: 80, draw: (ctx, ent) => this.drawWorkbench(ctx, ent) }));
-                this.add(new Entity({ id: 'work_boat', name: 'Wooden Boat', category: 'toy', x: 4960, y: 3000, w: 55, h: 40, draw: (ctx, ent) => this.drawToyBoat(ctx, ent) }));
-
-                // 16. GARDEN SHED & EAST GARDEN
-                this.add(new Entity({ id: 'gar_can', name: 'Watering Can', category: 'watering_can', x: 5550, y: 3080, w: 50, h: 45, draw: (ctx, ent) => this.drawWateringCan(ctx, ent) }));
-                this.add(new Entity({ id: 'gar_pot1', name: 'Sunflower Pot', category: 'plant', x: 5620, y: 3080, w: 45, h: 75, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'sunflower') }));
-                this.add(new Entity({ id: 'gar_pot2', name: 'Tulip Pot', category: 'plant', x: 5680, y: 3080, w: 40, h: 65, draw: (ctx, ent) => this.drawPlantPot(ctx, ent, 'tulip') }));
-                this.add(new Entity({ id: 'gar_tools', name: 'Garden Trowel', category: 'decor', x: 5740, y: 3080, w: 35, h: 45, draw: (ctx, ent) => this.drawGardenTool(ctx, ent) }));
-                this.add(new Entity({ id: 'gar_bench', name: 'Garden Bench', category: 'chair', x: 6500, y: 3080, w: 140, h: 70, draw: (ctx, ent) => this.drawBench(ctx, ent, '#15803d') }));
-            }
-
-            drawPerson(ctx, ent) {
-                const d = ent.details;
-                const w = ent.w;
-                const h = ent.h;
-                const isSitting = ent.isSitting;
-                const isWalking = ent.state === 'walking';
-
-                ctx.save();
-                if (ent.facingLeft) {
-                    ctx.scale(-1, 1);
-                }
-
-                const walkYOffset = isWalking ? Math.abs(Math.sin(ent.walkCycle)) * -6 : 0;
-                const idleYOffset = (ent.state === 'idle') ? ent.idleBreathing : 0;
-                const totalY = walkYOffset + idleYOffset;
-
-                ctx.translate(0, totalY);
-
-                const bodyY = isSitting ? -h + 48 : -h + 38;
-                const bodyH = isSitting ? h - 60 : h - 50;
-
-                // Head
-                ctx.fillStyle = d.skin;
-                ctx.beginPath();
-                ctx.arc(0, -h + 20, 18, 0, Math.PI * 2);
-                ctx.fill();
-
-                // Eyes with Blinking
-                ctx.fillStyle = '#0f172a';
-                if (ent.isBlinking) {
-                    ctx.strokeStyle = '#0f172a';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.moveTo(-9, -h + 18); ctx.lineTo(-3, -h + 18);
-                    ctx.moveTo(3, -h + 18); ctx.lineTo(9, -h + 18);
-                    ctx.stroke();
-                } else if (ent.reactionType === 'happy') {
-                    ctx.strokeStyle = '#0f172a';
-                    ctx.lineWidth = 2;
-                    ctx.beginPath();
-                    ctx.arc(-6, -h + 18, 3, Math.PI, 0);
-                    ctx.arc(6, -h + 18, 3, Math.PI, 0);
-                    ctx.stroke();
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(-6, -h + 18, 2.5, 0, Math.PI * 2);
-                    ctx.arc(6, -h + 18, 2.5, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // Mouth
-                ctx.strokeStyle = '#0f172a';
-                ctx.lineWidth = 2;
-                ctx.beginPath();
-                if (ent.state === 'eating' || ent.reactionType === 'chewing') {
-                    const chewPhase = Math.floor(Date.now() / 90) % 2;
-                    ctx.arc(0, -h + 22, chewPhase === 0 ? 4 : 2, 0, Math.PI * 2);
-                } else {
-                    ctx.arc(0, -h + 20, 8, 0.1, Math.PI - 0.1);
-                }
-                ctx.stroke();
-
-                // Hair Styles
-                ctx.fillStyle = d.hair;
-                if (d.hairStyle === 'chic_bob') {
-                    ctx.beginPath();
-                    ctx.arc(0, -h + 16, 22, Math.PI * 0.8, Math.PI * 2.2);
-                    ctx.fill();
-                } else if (d.hairStyle === 'pigtails') {
-                    ctx.beginPath();
-                    ctx.arc(-18, -h + 16, 10, 0, Math.PI * 2);
-                    ctx.arc(18, -h + 16, 10, 0, Math.PI * 2);
-                    ctx.arc(0, -h + 14, 19, Math.PI, Math.PI * 2);
-                    ctx.fill();
-                } else if (d.hairStyle === 'glasses_grey') {
-                    ctx.beginPath();
-                    ctx.arc(0, -h + 14, 19, Math.PI, Math.PI * 2);
-                    ctx.fill();
-                    ctx.strokeStyle = '#0f172a';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(-12, -h + 14, 10, 8);
-                    ctx.strokeRect(2, -h + 14, 10, 8);
-                } else if (d.hairStyle === 'chef_hat') {
-                    ctx.fillStyle = '#ffffff';
-                    ctx.fillRect(-14, -h - 15, 28, 20);
-                    ctx.beginPath();
-                    ctx.arc(0, -h - 15, 20, 0, Math.PI * 2);
-                    ctx.fill();
-                } else {
-                    ctx.beginPath();
-                    ctx.arc(0, -h + 14, 20, Math.PI, Math.PI * 2);
-                    ctx.fill();
-                }
-
-                // Render Worn Hat
-                if (ent.wornItems.hat) {
-                    ctx.save();
-                    ctx.translate(0, -h + 12);
-                    ent.wornItems.hat.draw(ctx, ent.wornItems.hat);
-                    ctx.restore();
-                }
-
-                // Body Base / Shirt / Dress
-                if (ent.wornItems.dress) {
-                    ctx.save();
-                    ctx.translate(0, bodyY + 25);
-                    ent.wornItems.dress.draw(ctx, ent.wornItems.dress);
-                    ctx.restore();
-                } else {
-                    if (ent.wornItems.shirt) {
-                        ctx.save();
-                        ctx.translate(0, bodyY + 20);
-                        ent.wornItems.shirt.draw(ctx, ent.wornItems.shirt);
-                        ctx.restore();
-                    } else {
-                        ctx.fillStyle = d.outfit;
-                        ctx.beginPath();
-                        ctx.roundRect(-w / 2.5, bodyY, w / 1.25, bodyH, 8);
-                        ctx.fill();
-                    }
-
-                    if (ent.wornItems.pants) {
-                        ctx.save();
-                        ctx.translate(0, bodyY + bodyH - 10);
-                        ent.wornItems.pants.draw(ctx, ent.wornItems.pants);
-                        ctx.restore();
-                    }
-                }
-
-                // Legs with Walking Swing Animation
-                ctx.fillStyle = '#1e293b';
-                if (isSitting) {
-                    ctx.fillRect(-w / 3, -16, 20, 8);
-                    ctx.fillRect(-w / 3 + 12, -16, 8, 16);
-                } else if (isWalking) {
-                    const legAngle = Math.sin(ent.walkCycle) * 14;
-                    ctx.save();
-                    ctx.translate(-w / 4, -12);
-                    ctx.rotate((legAngle * Math.PI) / 180);
-                    ctx.fillRect(-4, 0, 8, 14);
-                    ctx.restore();
-
-                    ctx.save();
-                    ctx.translate(w / 4, -12);
-                    ctx.rotate((-legAngle * Math.PI) / 180);
-                    ctx.fillRect(-4, 0, 8, 14);
-                    ctx.restore();
-                } else {
-                    if (ent.wornItems.shoes) {
-                        ctx.save();
-                        ctx.translate(0, -2);
-                        ent.wornItems.shoes.draw(ctx, ent.wornItems.shoes);
-                        ctx.restore();
-                    } else {
+                this.add(new Entity({ id: 'hall_plant', name: 'Bay Tree', category: 'plant', x: 2880, …3325 tokens truncated… } else {
                         ctx.fillRect(-w / 3, -12, 12, 12);
                         ctx.fillRect(w / 3 - 12, -12, 12, 12);
                     }
@@ -2688,6 +2499,26 @@
             const canvas = document.getElementById('world-canvas');
 
             const camera = new Camera(WORLD_WIDTH, WORLD_HEIGHT);
+
+            // Shared accessibility and sensory controls. Persist only this preference locally.
+            const volumeControl = document.getElementById('master-volume');
+            const savedVolume = Number(localStorage.getItem('playworld-volume'));
+            if (Number.isFinite(savedVolume)) volumeControl.value = String(Math.max(0, Math.min(1, savedVolume)));
+            volumeControl.addEventListener('input', () => {
+                const level = Number(volumeControl.value);
+                document.querySelectorAll('audio, video').forEach(media => { media.volume = level; });
+                localStorage.setItem('playworld-volume', String(level));
+            });
+            canvas.addEventListener('keydown', (event) => {
+                const step = 120;
+                if (event.key === 'ArrowLeft') { camera.x -= step; event.preventDefault(); }
+                if (event.key === 'ArrowRight') { camera.x += step; event.preventDefault(); }
+                if (event.key === 'ArrowUp') { camera.y -= step; event.preventDefault(); }
+                if (event.key === 'ArrowDown') { camera.y += step; event.preventDefault(); }
+                if (event.key === '+' || event.key === '=') { camera.zoom = Math.min(camera.maxZoom, camera.zoom * 1.1); event.preventDefault(); }
+                if (event.key === '-' || event.key === '_') { camera.zoom = Math.max(camera.minZoom, camera.zoom / 1.1); event.preventDefault(); }
+                camera.clamp();
+            });
             const entityManager = new EntityManager();
             const interactionManager = new InteractionManager(entityManager);
             const input = new InputController(canvas, camera, entityManager, interactionManager);
@@ -2813,3 +2644,4 @@
     </script>
 </body>
 </html>
+
